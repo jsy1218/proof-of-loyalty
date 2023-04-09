@@ -9,8 +9,9 @@ import '../public/css/style.css';
 // const ThemeSwitch = dynamic(import("./../components/elements/ThemeSwitch"), {
 //     ssr: false,
 // });
+import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Component {...pageProps} />
