@@ -4,7 +4,7 @@ function PageHead({ headTitle }) {
         <>
             <Head>
                 <title>
-                    {headTitle ? headTitle : "Gigo - Metaverse Web3 IGO/IDO Token Launchpad React Nextjs App"}
+                    {headTitle ? headTitle : "Proof of loyalty protocol"}
                 </title>
                 <link rel="icon" href="/favicon.png" />
             </Head>

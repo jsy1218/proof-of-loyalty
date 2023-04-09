@@ -9,7 +9,7 @@ const Footer = () => {
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="copyright">
                                 <p>
-                                    © Copyright 2022 <a href="#">Gigo</a>{" "}
+                                    © Copyright 2023 <a href="#">ProofOfLoyalty</a>{" "}
                                     All Rights Reserved
                                 </p>
                             </div>

@@ -1,5 +1,3 @@
-import LayoutFront from "../components/layout/LayoutFront";
-
 const Leaderboard = () => {
 
     const data = [
@@ -37,49 +35,31 @@ const Leaderboard = () => {
 
     return (
         <>
-            <LayoutFront
-                pageClass={"front"}
-                headTitle={"Leaderboard"}
-                pageTitle={"Leaderboard"}
-                pageTitleSub={"Welcome Leaderboard Page"}
-                parent={"Home"}
-                child={"Leaderboard"}
+            <div className="leaderboard-table">
+                <div className="table-responsive">
+                    <table className="table">
+                        <tbody>
+                            <tr>
+                                <th># RANK</th>
+                                <th>Name</th>
+                                <th>Public Key</th>
+                                <th>locked</th>
+                                <th>Balance</th>
+                            </tr>
+                            {data.map((item, i) => (
+                                <tr>
+                                    <td>{i}</td>
+                                    <td>John Doe</td>
+                                    <td>0x95e441....ddd97400</td>
+                                    <td>365 Days</td>
+                                    <td>$305,626.99</td>
+                                </tr>
+                            ))}
 
-            >
-                <div className="leaderboard section-padding">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xl-12">
-                                <div className="leaderboard-table">
-                                    <div className="table-responsive">
-                                        <table className="table">
-                                            <tbody>
-                                                <tr>
-                                                    <th># RANK</th>
-                                                    <th>Name</th>
-                                                    <th>Public Key</th>
-                                                    <th>locked</th>
-                                                    <th>Balance</th>
-                                                </tr>
-                                                {data.map((item, i) => (
-                                                    <tr>
-                                                        <td>01</td>
-                                                        <td>John Doe</td>
-                                                        <td>0x95e441....ddd97400</td>
-                                                        <td>365 Days</td>
-                                                        <td>$305,626.99</td>
-                                                    </tr>
-                                                ))}
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
-            </LayoutFront>
+            </div>
         </>
     );
 };

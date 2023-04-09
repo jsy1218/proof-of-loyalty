@@ -84,15 +84,16 @@ function HeaderLanding() {
                                                         ? "dropdown-menu show"
                                                         : "dropdown-menu"
                                                 }>
-                                                    <Link href="/explore-grid"><a className="dropdown-item">Explore Grid</a></Link>
+                                                {/* <Link href="/explore-grid"><a className="dropdown-item">Explore Grid</a></Link>
                                                     <Link href="/explore-list"><a className="dropdown-item">Explore List</a></Link>
                                                     <Link href="/explore-details"><a className="dropdown-item">Explore Details</a></Link>
-                                                    {/* <Link href="/explore-calendar"><a className="dropdown-item">Explore Calendar</a></Link> */}
+                                                    <Link href="/explore-calendar"><a className="dropdown-item">Explore Calendar</a></Link> */}
                                                 </div>
                                             </li>
                                             <li className="nav-item dropdown" onClick={() => handleToggle(3)}>
-                                                <Link href="/staking-one"><a className="nav-link">Staking</a></Link>
-                                                {/* <div class={
+                                                <a className="nav-link">Staking</a>
+                                                {/* <Link href="/staking-one"><a className="nav-link">Staking</a></Link>
+                                                <div class={
                                                     isActive.key == 3
                                                         ? "dropdown-menu show"
                                                         : "dropdown-menu"
@@ -114,13 +115,13 @@ function HeaderLanding() {
                                                             <div className="mega-menu-nav">
                                                                 {/* <h5>Auth</h5> */}
                                                                 {/* <Link href="/kyc"><a className="dropdown-item">Kyc</a></Link> */}
-                                                                <Link href="/farming"><a className="dropdown-item">Farming</a></Link>
+                                                                {/* <Link href="/farming"><a className="dropdown-item">Farming</a></Link>
                                                                 <Link href="/leaderboard"><a className="dropdown-item">Leaderboard</a></Link>
                                                                 <Link href="/ranking"><a className="dropdown-item">Ranking</a></Link>
                                                                 <Link href="/roadmap"><a className="dropdown-item">Roadmap</a></Link>
                                                                 {/* <Link href="/tokenomics"><a className="dropdown-item">Tokenomics</a></Link> */}
                                                                 {/* <Link href="/tier"><a className="dropdown-item">Tier</a></Link> */}
-                                                                <Link href="/team"><a className="dropdown-item">Team</a></Link>
+                                                                {/* <Link href="/team"><a className="dropdown-item">Team</a></Link>
                                                                 <Link href="/contact"><a className="dropdown-item">Contact</a></Link>
                                                                 {/* <Link href="/apply"><a className="dropdown-item">Apply</a></Link> */}
                                                             {/* </div>
@@ -128,8 +129,8 @@ function HeaderLanding() {
                                                         <div className="col-xl-6">
                                                             <div className="mega-menu-nav"> */}
                                                                 {/* <h5>Auth</h5> */}
-                                                                <Link href="/signin"><a className="dropdown-item">Sign in</a></Link>
-                                                                <Link href="/signup"><a className="dropdown-item">Sign Up</a></Link>
+                                                                {/* <Link href="/signin"><a className="dropdown-item">Sign in</a></Link>
+                                                                <Link href="/signup"><a className="dropdown-item">Sign Up</a></Link> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -141,8 +142,7 @@ function HeaderLanding() {
                                     </div>
 
                                     <div className="signin-btn d-flex align-items-center">
-
-                                        <Link href="/signin"><a className="btn btn-primary">Sign In</a></Link>
+                                        {/* <Link href="/signin"><a className="btn btn-primary">Sign In</a></Link> */}
                                     </div>
                                 </nav>
                             </div>
