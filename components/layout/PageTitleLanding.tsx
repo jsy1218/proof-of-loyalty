@@ -1,8 +1,8 @@
 type PageTitleProps = {
-    pageTitle: string,
-    pageTitleSub: string,
-    parent: string,
-    child: string
+    pageTitle?: string,
+    pageTitleSub?: string,
+    parent?: string,
+    child?: string
 }
 
 function PageTitle(props: PageTitleProps) {
