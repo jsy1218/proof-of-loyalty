@@ -1,7 +1,7 @@
 import Link from "next/link";
 import LayoutFront from "../components/layout/LayoutFront";
 import Leaderboard from "./leaderboard";
-import IntroSlider from "./../components/slider/IntroSlider";
+import IntroSlider from "../components/slider/IntroSlider";
 
 const Index = () => {
 	return (
