@@ -1,0 +1,106 @@
+.difference__table * {
+    margin: 0;
+}
+
+.difference__row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    border-bottom: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+    &:first-child{
+        border-left: 0px solid $border-color;
+
+    }
+}
+
+.difference__section {
+    background: $light;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.difference__cell {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height: auto;
+    padding: 10px 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 10px;
+    border-right: 1px solid $border-color;
+    line-height: 30px;
+}
+
+// @media (min-width: 640px) {
+//     .difference__cell {
+//         // height: 40px;
+//         // padding: 0;
+//     }
+// }
+
+.difference__cell--feature {
+    position: relative;
+    // line-height: 1;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    text-align: left;
+    -webkit-box-flex: 2;
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
+}
+
+// .difference__cell--feature:hover:after {
+//     /*   content: attr(data-tooltip); */
+// }
+.difference__cell--qbo,
+.difference__cell--qbdt {
+    color: #FFF;
+    font-size: 12px;
+}
+
+@media (min-width: 640px) {
+    .difference__cell--qbo,
+    .difference__cell--qbdt {
+        font-size: 14px;
+    }
+}
+
+.difference__cell--qbo {
+    background: #2CA01C;
+    margin-right: 1px;
+}
+
+.difference__cell--qbdt {
+    background: #393A3D;
+}
+
+.difference__tick {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background: #2CA01C;
+}
+
+.difference__tick--black {
+    background: #393A3D;
+}

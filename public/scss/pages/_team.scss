@@ -1,0 +1,31 @@
+.team-content {
+	background: $light;
+	text-align: center;
+	padding: 30px 20px;
+	border-radius: $radius;
+	border: 1px solid $border-color;
+	margin-top: 80px;
+	img {
+		margin-bottom: 10px;
+		margin-top: -80px;
+		border: 1px solid $border-color;
+		display: inline-block;
+		padding: 10px;
+		background: $light;
+		border-radius: 100px;
+	}
+
+	h3 {
+		font-size: 22px;
+	}
+	p {
+		font-size: 16px;
+	}
+	.team-social {
+		margin-top: 20px;
+		a {
+			color: $white;
+			margin: 0px 7px;
+		}
+	}
+}

@@ -1,505 +1,448 @@
-import Base from "@layouts/Baseof";
-import Circle from "@layouts/components/Circle";
-import Cta from "@layouts/components/Cta";
-import ImageFallback from "@layouts/components/ImageFallback";
-import VideoPopup from "@layouts/components/VideoPopup";
-import { getListPage } from "@lib/contentParser";
-import { gsap } from "@lib/gsap";
-import { markdownify } from "@lib/utils/textConverter";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { TbQuote } from "react-icons/tb";
-import { Autoplay, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+import TeamMember from "../components/elements/TeamMember";
+import LayoutFront from "../components/layout/LayoutFront";
+import CompleteList from './../components/elements/CompleteList';
+import ExploreList from './../components/elements/ExploreList';
+import IntroSlider from "./../components/slider/IntroSlider";
 
-const Home = ({ banner, brands, features, intro, speciality, testimonial }) => {
-  const paginationRef = useRef(null);
-  const testimonialPaginationRef = useRef(null);
+const Index = () => {
+	return (
+		<>
+			<LayoutFront pageClass={"front"}>
+				<div className="intro1 section-padding">
+					<div className="container">
+						<div className="row align-items-center justify-content-between">
+							<div className="col-xl-5">
+								<div className="intro-content">
+									<p>THE NEXT-GENERATION LAUNCHPAD FOR</p>
+									<h1>Blockchain Games and the Metaverse</h1>
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const banner = document.querySelector(".banner");
-      const bannerBg = document.querySelector(".banner-bg");
-      const bannerContent = document.querySelector(".banner-content");
-      const header = document.querySelector(".header");
-      const tl = gsap.timeline();
+									<div className="intro-btn">
+										<Link href="#">
+											<a className="btn btn-primary">
+												Launchpad
+											</a>
+										</Link>
+										<Link href="#">
+											<a className="btn btn-outline-primary">
+												KYC for IDO
+											</a>
+										</Link>
+									</div>
+									<div className="intro-search">
+										<form action="#">
+											<input
+												type="text"
+												placeholder="Search Here"
+											/>
+											<span>
+												<i className="ri-search-line"></i>
+											</span>
+										</form>
+									</div>
+									<div className="intro-social">
+										<Link href="#">
+											<a>
+												<i className="bi bi-facebook"></i>
+											</a>
+										</Link>
+										<Link href="#">
+											<a>
+												<i className="bi bi-twitter"></i>
+											</a>
+										</Link>
+										<Link href="#">
+											<a>
+												<i className="bi bi-tiktok"></i>
+											</a>
+										</Link>
+										<Link href="#">
+											<a>
+												<i className="bi bi-telegram"></i>
+											</a>
+										</Link>
+										<Link href="#">
+											<a>
+												<i className="bi bi-discord"></i>
+											</a>
+										</Link>
+									</div>
+								</div>
+							</div>
+							<div className="col-xl-6">
+								<div className="intro-slider">
+									<IntroSlider />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-      tl.fromTo(
-        ".banner-title",
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, delay: 0.5 }
-      )
-        .fromTo(
-          ".banner-btn",
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5 },
-          ">-0.4"
-        )
-        .fromTo(
-          ".banner-img",
-          {
-            y: 20,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-          },
-          ">-.5"
-        );
+				<div className="upcoming-project section-padding">
+					<div className="container">
+						<div className="row">
+							<div className="col-xl-6">
+								<div className="section-title">
+									<h2>Upcoming Projects</h2>
+								</div>
+							</div>
+						</div>
+						<div className="row">
+							<ExploreList/>
+						</div>
+					</div>
+				</div>
+				<div className="completed-project section-padding">
+					<div className="container">
+						<div className="row">
+							<div className="col-xl-6">
+								<div className="section-title">
+									<h2>Completed Projects</h2>
+								</div>
+							</div>
+						</div>
+						<div className="row">
+							<CompleteList/>
+						</div>
+					</div>
+				</div>
 
-      //parallax banner
-      const parallaxTl = gsap.timeline({
-        ease: "none",
-        scrollTrigger: {
-          trigger: banner,
-          start: () => `top ${header.clientHeight}`,
-          scrub: true,
-        },
-      });
+				<div className="what-we-do section-padding">
+					<div className="container">
+						<div className="row align-items-center justify-content-between">
+							<div className="col-lg-5">
+								<div className="what-we-do-img">
+									<img
+										src="/images/items/v2.jpg"
+										alt=""
+										className="img-fluid rounded"
+									/>
+								</div>
+							</div>
+							<div className="col-lg-6">
+								<div className="what-we-do-content">
+									<span>WELCOME TO GigoSTARTER</span>
+									<h3>What We Do</h3>
+									<p>
+										We’re a blockchain gaming launchpad
+										focused on growing the Gigo ecosystem
+										and the metaverse.
+									</p>
+									<p>
+										Built on Gigo’s JumpNet with a roadmap
+										towards Efinity, our proprietary
+										platform will enable creators and game
+										developers to run capital-raising
+										campaigns and build communities using
+										blockchain technology.
+									</p>
+									<p>
+										Beyond issuing tokens, we provide game
+										developers a way to explore other
+										innovative ways of raising capital to
+										fund their projects through the sale of
+										virtual items as non-fungible tokens
+										(NFTs).
+									</p>
+									<p>
+										Our incubation program, supported by an
+										accredited partner network, will provide
+										projects with end-to-end support to
+										develop sustainable strategies and
+										launch successful campaigns.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-      const position = (banner.offsetHeight - bannerBg.offsetHeight) * 0.4;
-      parallaxTl
-        .fromTo(
-          bannerBg,
-          {
-            y: 0,
-          },
-          {
-            y: -position,
-          }
-        )
-        .fromTo(
-          bannerContent,
-          {
-            y: 0,
-          },
-          {
-            y: position,
-          },
-          "<"
-        )
-        .fromTo(
-          ".banner-bg .circle",
-          {
-            y: 0,
-          },
-          {
-            y: position,
-          },
-          "<"
-        );
-    });
+				<div className="mission-vission section-padding bg-light">
+					<div className="container">
+						<div className="row">
+							<div className="col-md-6">
+								<div className="mission-vission-content">
+									<span>
+									<i class="ri-send-plane-fill"></i>
+									</span>
+									<h6>Our Mission</h6>
+									<h3>
+										Create Ecosystem For
+										Blockchain Gaming
+									</h3>
+									<p>
+										To help create a better world by
+										embracing blockchain-powered emerging
+										technologies. We believe we are in a
+										pivotal moment in history where humanity
+										is preparing for the New Normal Virtual
+										worlds will accelerate us into this new
+										reality, revolutionizing how we live,
+										work and play.
+									</p>
+								</div>
+							</div>
+							<div className="col-md-6">
+								<div className="mission-vission-content">
+									<span>
+									<i class="ri-eye-fill"></i>
+									</span>
+									<h6>OUR VISION</h6>
+									<h3>Building A Community</h3>
+									<p>
+										To build a thriving ecosystem for
+										blockchain gaming and introduce new ways
+										for players earn crypto in a fun,
+										engaging way. Community is the core of
+										our organization, and we’re building a
+										tribe of forward-thinking
+										early-adopters, creators and supporters.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-    return () => ctx.revert();
-  }, []);
+				<div className="creating section-padding">
+					<div className="container">
+						<div className="row">
+							<div className="col-md-6">
+								<div className="creating-content">
+									<img
+										src="/images/items/4.jpg"
+										class="img-fluid rounded"
+										alt=""
+									/>
+									<h3>Embrace the Gigo Ecosystem</h3>
+									<p>
+										We help creators and game development
+										studios embrace Gigo robust blockchain
+										ecosystem for their Bblockchain and
+										digital asset strategies. We will guide
+										developers on integrating and move their
+										NFTs from any chain onto Efinity.
+									</p>
+								</div>
+							</div>
+							<div className="col-md-6">
+								<div className="creating-content">
+									<img
+										src="/images/items/5.jpg"
+										class="img-fluid rounded"
+										alt=""
+									/>
+									<h3>Embrace the Gigo Ecosystem</h3>
+									<p>
+										We help creators and game development
+										studios embrace Gigo robust blockchain
+										ecosystem for their Bblockchain and
+										digital asset strategies. We will guide
+										developers on integrating and move their
+										NFTs from any chain onto Efinity.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-  return (
-    <Base>
-      <section className="section banner pt-0">
-        <div className="container-xl">
-          <div className="relative">
-            <div className="bg-theme banner-bg col-12 absolute top-0 left-0">
-              <Circle
-                className="circle left-[10%] top-12"
-                width={32}
-                height={32}
-                fill={false}
-              />
-              <Circle
-                className="circle left-[2.5%] top-[29%]"
-                width={85}
-                height={85}
-              />
-              <Circle
-                className="circle left-[22%] bottom-[48%]"
-                width={20}
-                height={20}
-              />
-              <Circle
-                className="circle left-[15%] bottom-[37%]"
-                width={47}
-                height={47}
-                fill={false}
-              />
-              <Circle
-                className="circle left-[6%] bottom-[13%]"
-                width={62}
-                height={62}
-                fill={false}
-              />
-              <Circle
-                className="circle right-[12%] top-[15%]"
-                width={20}
-                height={20}
-              />
-              <Circle
-                className="circle right-[2%] top-[30%]"
-                width={73}
-                height={73}
-                fill={false}
-              />
-              <Circle
-                className="circle right-[19%] top-[48%]"
-                width={37}
-                height={37}
-                fill={false}
-              />
-              <Circle
-                className="circle right-[33%] top-[54%]"
-                width={20}
-                height={20}
-              />
-              <Circle
-                className="circle right-[3%] bottom-[20%]"
-                width={65}
-                height={65}
-              />
-            </div>
-            <div className="row overflow-hidden rounded-2xl">
-              <div className="col-12">
-                <div className="row relative justify-center pb-10">
-                  <div className="banner-content col-10 pt-20 pb-10 text-center">
-                    {markdownify(
-                      banner.title,
-                      "h1",
-                      "mb-8 banner-title opacity-0"
-                    )}
-                    <div className="banner-btn opacity-0">
-                      <Link className="btn btn-primary" href={banner.link.href}>
-                        {banner.link.label}
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="col-10">
-                    <ImageFallback
-                      className="banner-img opacity-0"
-                      src={banner.image}
-                      width={1170}
-                      height={666}
-                      priority={true}
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row border-y border-border py-5">
-              <div className="animate from-right col-12">
-                <Swiper
-                  loop={true}
-                  slidesPerView={3}
-                  breakpoints={{
-                    992: {
-                      slidesPerView: 5,
-                    },
-                  }}
-                  spaceBetween={20}
-                  modules={[Autoplay]}
-                  autoplay={{ delay: 3000 }}
-                >
-                  {brands.map((brand, index) => (
-                    <SwiperSlide
-                      className=" h-20 cursor-pointer py-6 px-6 grayscale  transition hover:grayscale-0 lg:px-10"
-                      key={"brand-" + index}
-                    >
-                      <div className="relative h-full">
-                        <ImageFallback
-                          className="object-contain"
-                          src={brand}
-                          sizes="100vw"
-                          alt=""
-                          fill={true}
-                          priority={true}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+				<div className="built-in section-padding">
+					<div className="container">
+						<div className="row">
+							<div className="col-xl-6">
+								<div className="section-title">
+									<h2>Built On Gigo's Jumpnet Blockchain</h2>
+								</div>
+							</div>
+						</div>
+						<div className="row align-items-center">
+							<div className="col-lg-4">
+								<div className="built-in-list">
+									<ul>
+										<li><i class="ri-arrow-right-s-line"></i> No gas fees</li>
+										<li><i class="ri-arrow-right-s-line"></i> Carbon-negative NFTs</li>
+										<li><i class="ri-arrow-right-s-line"></i> Smart contract support</li>
+									</ul>
+								</div>
+							</div>
+							<div className="col-lg-8 col-md-12">
+								<div className="row">
+									<div className="col-md-4">
+										<div className="built-in-content">
+											<span><i class="ri-rocket-fill"></i></span>
+											<h4>Lunchpad</h4>
+											<p>
+												Buying and Selling of NFTs,
+												in-game items and more
+											</p>
+										</div>
+									</div>
+									<div className="col-md-4">
+										<div className="built-in-content">
+											<span><i class="ri-group-fill"></i></span>
+											<h4>Management</h4>
+											<p>
+												Buying and Selling of NFTs,
+												in-game items and more
+											</p>
+										</div>
+									</div>
+									<div className="col-md-4">
+										<div className="built-in-content">
+											<span><i class="ri-award-fill"></i></span>
+											<h4>Reward</h4>
+											<p>
+												Buying and Selling of NFTs,
+												in-game items and more
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-      {/* Features */}
-      <section className="section">
-        <div className="container text-center">
-          <div className="animate">
-            <p className="uppercase">{features.sub_title}</p>
-            {markdownify(features.title, "h2", "mt-4 section-title")}
-            {markdownify(features.description, "p", "mt-10")}
-          </div>
-          <div className="animate from-right relative mt-10">
-            <Swiper
-              slidesPerView={1}
-              pagination={{
-                type: "bullets",
-                el: paginationRef.current,
-                clickable: true,
-                dynamicBullets: true,
-              }}
-              // autoplay={{ delay: 3000 }}
-              onBeforeInit={(swiper) => {
-                swiper.params.pagination.el = paginationRef.current;
-              }}
-              modules={[Pagination]}
-              breakpoints={{
-                768: {
-                  slidesPerView: 2,
-                },
-                1200: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              {features.list.map((item, index) => (
-                <SwiperSlide key={"feature-" + index}>
-                  <div className="feature-card m-4 rounded-md border border-transparent py-16 px-7 shadow-[0px_4px_25px_rgba(0,0,0,.05)] transition-all duration-300  hover:border-[#ffece4] hover:shadow-none">
-                    <div className="feature-card-icon inline-flex h-20 w-20 items-center justify-center rounded-md border border-[#fff7f3] text-primary">
-                      <FeatherIcon icon={item.icon} />
-                    </div>
-                    <h3 className="h4 mt-6 mb-5">{item.title}</h3>
-                    <p>{item.content}</p>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <div className="relative mt-9 flex justify-center">
-              <div className="pagination " ref={paginationRef}></div>
-            </div>
-          </div>
-        </div>
-      </section>
+				<div className="team section-padding">
+					<div className="container">
+						<div className="row">
+							<div className="col-xl-6">
+								<div className="section-title">
+									<h2>Meet Our Team</h2>
+								</div>
+							</div>
+						</div>
+						<div className="row">
+							<TeamMember/>
+						</div>
+					</div>
+				</div>
 
-      {/* Short Into */}
-      <section className="section pt-0">
-        <div className="container-xl">
-          <div className="relative px-4 py-[70px]">
-            <div className="text-center">
-              <div className="animate">
-                <p>{intro.subtitle}</p>
-                {markdownify(intro.title, "h2", "mt-4 section-title")}
-                {markdownify(intro.description, "p", "mt-10")}
-              </div>
-              <div className="mx-auto mt-10 h-full max-h-[394px] w-full max-w-[716px]">
-                <VideoPopup id={intro.video_id} thumbnail={intro.thumbnail} />
-              </div>
-            </div>
-            <div className="bg-theme absolute top-0 left-0 w-full">
-              <Circle
-                className="left-[10%] top-12"
-                width={32}
-                height={32}
-                fill={false}
-              />
-              <Circle className="left-[3%] top-[30%]" width={85} height={85} />
-              <Circle
-                className="left-[22%] bottom-[52%]"
-                width={20}
-                height={20}
-              />
-              <Circle
-                className="left-[15%] bottom-[35%]"
-                width={47}
-                height={47}
-                fill={false}
-              />
-              <Circle
-                className="left-[6%] bottom-[6%]"
-                width={62}
-                height={62}
-                fill={false}
-              />
-              <Circle
-                className="right-[12%] top-[12%]"
-                width={20}
-                height={20}
-              />
-              <Circle
-                className="right-[2%] top-[30%]"
-                width={73}
-                height={73}
-                fill={false}
-              />
-              <Circle
-                className="right-[19%] top-[50%]"
-                width={37}
-                height={37}
-                fill={false}
-              />
-              <Circle
-                className="right-[33%] top-[52%]"
-                width={20}
-                height={20}
-              />
-              <Circle
-                className="right-[5%] bottom-[18%]"
-                width={65}
-                height={65}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Special Features */}
-      <section className="section">
-        <div className="container">
-          <div className="row items-center justify-center">
-            <div className="animate lg:col-6 lg:order-2">
-              <ImageFallback
-                className="mx-auto"
-                src={speciality.primary.image}
-                width={575}
-                height={511}
-                alt="primary speciality"
-              />
-            </div>
-            <div className="animate lg:col-5 lg:order-1">
-              <p>{speciality.primary.subtitle}</p>
-              {markdownify(
-                speciality.primary.title,
-                "h2",
-                "mt-4 section-title bar-left"
-              )}
-              {markdownify(speciality.primary.description, "p", "mt-10")}
-            </div>
-          </div>
-          <div className="row items-center">
-            <div className="animate lg:col-6">
-              <ImageFallback
-                className="mx-auto"
-                src={speciality.secondary.image}
-                width={575}
-                height={511}
-                alt="secondary speciality"
-              />
-            </div>
-            <div className="animate lg:col-5">
-              <p>{speciality.secondary.subtitle}</p>
-              {markdownify(
-                speciality.secondary.title,
-                "h2",
-                "mt-4 section-title bar-left"
-              )}
-              {markdownify(speciality.secondary.description, "p", "mt-10")}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonial */}
-      <section className="section pt-0">
-        <div className="container">
-          <div className="animate text-center">
-            <p>{testimonial.subtitle}</p>
-            {markdownify(testimonial.title, "h2", "mt-4 section-title")}
-            {markdownify(testimonial.description, "p", "mt-10")}
-          </div>
-          <div className="animate row mt-10 items-center justify-center">
-            <div className="xl:col-11">
-              <div className="row items-center justify-center">
-                <div className="hidden lg:col-3 xl:col-4 lg:block">
-                  <ImageFallback
-                    src="/images/testimonials-01.png"
-                    width={455}
-                    height={522}
-                    alt="testimonials"
-                  />
-                </div>
-                <div className="md:col-7 lg:col-6 xl:col-4">
-                  {
-                    <Swiper
-                      modules={[Pagination, Autoplay]}
-                      pagination={{
-                        el: testimonialPaginationRef.current,
-                        type: "bullets",
-                        dynamicBullets: true,
-                        clickable: true,
-                      }}
-                      autoplay={{ delay: 3000 }}
-                      onBeforeInit={(swiper) => {
-                        swiper.params.pagination.el =
-                          testimonialPaginationRef.current;
-                      }}
-                      className="testimonial-slider mx-auto max-w-[420px] cursor-pointer lg:max-w-[480px]"
-                    >
-                      {testimonial.list.map((item, index) => (
-                        <SwiperSlide
-                          className="text-center"
-                          key={"testimonial-" + index}
-                        >
-                          <div className="py-6 px-8 sm:py-12 md:px-10 lg:px-20 xl:px-12">
-                            <TbQuote className="mx-auto rotate-180 text-5xl text-body sm:text-6xl lg:text-8xl" />
-                            {markdownify(
-                              item.content,
-                              "p",
-                              "text-[17px] lg:text-lg text-body mt-4 md:mt-5 xl:mt-8"
-                            )}
-                            <div className="mt-7 inline-block rounded-md bg-body p-7 shadow-[0_10px_50px_rgba(0,0,0,.08)] md:mt-5 lg:mt-8 xl:mt-5">
-                              <ImageFallback
-                                className="mx-auto rounded-full"
-                                src={item.avatar}
-                                width={90}
-                                height={90}
-                                priority={true}
-                                alt={item.author}
-                              />
-                              <h6>{item.author}</h6>
-                              <p>{item.profession}</p>
-                            </div>
-                          </div>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  }
-                  <div className="relative h-8">
-                    <div
-                      className="pagination absolute left-1/2 -translate-x-1/2"
-                      ref={testimonialPaginationRef}
-                    ></div>
-                  </div>
-                </div>
-                <div className="hidden lg:col-3 xl:col-4 lg:block">
-                  <ImageFallback
-                    src="/images/testimonials-02.png"
-                    width={455}
-                    height={522}
-                    alt="testimonials"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cta */}
-      <Cta />
-    </Base>
-  );
+				<div className="investor section-padding">
+					<div className="container">
+						<div className="row justify-content-center">
+							<div className="col-xl-6">
+								<div className="section-title text-center">
+									<h2>Institutional Investors</h2>
+								</div>
+							</div>
+						</div>
+						<div className="row justify-content-center">
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/1.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/2.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/3.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/4.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/5.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/6.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/7.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/8.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/9.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/10.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/11.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+							<div className="col-auto">
+								<div className="investor-brand">
+									<img
+										src="/images/brand/2.png"
+										class="img-fluid"
+										alt=""
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</LayoutFront>
+		</>
+	);
 };
 
-export default Home;
-
-// for homepage data
-export const getStaticProps = async () => {
-  const homepage = await getListPage("content/_index.md");
-  const { frontmatter } = homepage;
-  const { banner, brands, features, intro, speciality, testimonial } =
-    frontmatter;
-
-  return {
-    props: {
-      banner: banner,
-      brands: brands,
-      features: features,
-      intro: intro,
-      speciality: speciality,
-      testimonial: testimonial,
-    },
-  };
-};
+export default Index;

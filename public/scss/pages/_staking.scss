@@ -1,0 +1,52 @@
+.stacking-content {
+	.stacking-toggle {
+		cursor: pointer;
+		i {
+			font-size: 32px;
+			position: absolute;
+			right: 30px;
+		}
+	}
+
+	.stacking-img {
+		display: flex;
+		align-items: flex-start;
+		@include respond("sm") {
+			display: block;
+		}
+
+		img {
+			border-radius: 100px;
+			@include respond("sm") {
+				margin-bottom: 30px;
+			}
+		}
+	}
+	.stacking-desc {
+		width: 100%;
+		h4 {
+			font-size: 22px;
+		}
+		.stack-info {
+			margin: 20px 0px;
+			h5 {
+				font-size: 18px;
+			}
+		}
+	}
+
+	hr {
+		margin: 30px 0px;
+	}
+
+	.claim-btn {
+		margin-top: 13px;
+	}
+	.btn {
+		background: #2c2f4c;
+		padding: 10px;
+		@include respond("md") {
+			margin-bottom: 50px;
+		}
+	}
+}
