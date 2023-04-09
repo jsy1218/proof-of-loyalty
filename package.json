@@ -9,8 +9,8 @@
         "sass": "node-sass --watch public/scss/style.scss public/css/style.css --source-map public/css/style.css.map"
     },
     "dependencies": {
-        "@types/node": "^18.15.11",
-        "@types/react": "^18.0.1",
+        "@types/node": "18.15.11",
+        "@types/react": "18.0.1",
         "bootstrap": "^5.1.3",
         "chart.js": "^3.7.1",
         "formik": "^2.2.9",
