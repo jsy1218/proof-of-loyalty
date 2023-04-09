@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import "./styles.css";
 function ThemeSwitch() {
     const [toggleTheme, setToggleTheme] = useState(
-        () => JSON.parse(localStorage.getItem("toggleTheme")) || "light-theme"
+        () => JSON.parse(localStorage.getItem("toggleTheme") || "light-theme")
     );
     useEffect(() => {
         localStorage.setItem("toggleTheme", JSON.stringify(toggleTheme));
