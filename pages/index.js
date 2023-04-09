@@ -1,8 +1,6 @@
 import Link from "next/link";
 import LayoutFront from "../components/layout/LayoutFront";
-import Leaderboard from "../pages/Leaderboard";
-import CompleteList from './../components/elements/CompleteList';
-import ExploreList from './../components/elements/ExploreList';
+import Leaderboard from "./leaderboard";
 import IntroSlider from "./../components/slider/IntroSlider";
 
 const Index = () => {
