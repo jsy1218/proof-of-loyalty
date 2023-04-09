@@ -1,8 +1,7 @@
 import dynamic from 'next/dynamic';
 import Link from "next/link";
 import React, { useState } from "react";
-import useClickOutside from './../../util/outsideClick';
-const ThemeSwitch = dynamic(() => import('../../components/elements/ThemeSwitch'), {
+const ThemeSwitch = dynamic(() => import('../elements/ThemeSwitch'), {
     ssr: false
 })
 function HeaderLanding() {
@@ -15,10 +14,11 @@ function HeaderLanding() {
         key: "",
     });
 
-    const handleToggle = (key) => {
+    const handleToggle = (key: string) => {
         if (isActive.key === key) {
             setIsActive({
                 status: false,
+                key: ""
             });
         } else {
             setIsActive({
@@ -27,13 +27,6 @@ function HeaderLanding() {
             });
         }
     };
-
-    let domNode = useClickOutside(() => {
-        setIsActive({
-            status: false,
-        });
-    });
-
 
     return (
         <>
@@ -60,10 +53,10 @@ function HeaderLanding() {
                                         <span className="navbar-toggler-icon"></span>
                                     </button>
                                     <div className={isToggled ? "collapse navbar-collapse show" : "collapse navbar-collapse"}>
-                                        <ul className="navbar-nav" ref={domNode}>
+                                        <ul className="navbar-nav">
 
                                             {/* <PerfectScrollbar> */}
-                                            <li className="nav-item dropdown" onClick={() => handleToggle(1)}>
+                                            <li className="nav-item dropdown" onClick={() => handleToggle("1")}>
                                                 {/* <a className="nav-link">Home
                                                     </a> */}
                                                 <Link href="/"><a className="nav-link">Home</a></Link>
@@ -76,11 +69,11 @@ function HeaderLanding() {
                                                         <Link href="/index2"><a className="dropdown-item">Home 2</a></Link>
                                                     </div> */}
                                             </li>
-                                            <li className="nav-item dropdown" onClick={() => handleToggle(2)}>
+                                            <li className="nav-item dropdown" onClick={() => handleToggle("2")}>
                                                 <a className="nav-link">Explore
                                                 </a>
-                                                <div class={
-                                                    isActive.key == 2
+                                                <div className={
+                                                    isActive.key == "2"
                                                         ? "dropdown-menu show"
                                                         : "dropdown-menu"
                                                 }>
@@ -90,7 +83,7 @@ function HeaderLanding() {
                                                     <Link href="/explore-calendar"><a className="dropdown-item">Explore Calendar</a></Link> */}
                                                 </div>
                                             </li>
-                                            <li className="nav-item dropdown" onClick={() => handleToggle(3)}>
+                                            <li className="nav-item dropdown" onClick={() => handleToggle("3")}>
                                                 <a className="nav-link">Staking</a>
                                                 {/* <Link href="/staking-one"><a className="nav-link">Staking</a></Link>
                                                 <div class={
@@ -102,11 +95,11 @@ function HeaderLanding() {
                                                     <Link href="/staking-two"><a className="dropdown-item">Staking Two</a></Link>
                                                 </div> */}
                                             </li>
-                                            <li className="nav-item dropdown position-statics" onClick={() => handleToggle(4)}>
+                                            <li className="nav-item dropdown position-statics" onClick={() => handleToggle("4")}>
                                                 <a className="nav-link">Pages
                                                 </a>
-                                                <div class={
-                                                    isActive.key == 4
+                                                <div className={
+                                                    isActive.key == "4"
                                                         ? "dropdown-menu mega-menu show"
                                                         : "dropdown-menu mega-menu"
                                                 }>

@@ -5,16 +5,21 @@ import HeaderLanding from "./HeaderLanding";
 import PageHead from "./PageHead";
 import PageTitleLanding from "./PageTitleLanding";
 
-const LayoutFront = ({
-    headTitle,
-    children,
-    pageTitle,
-    pageTitleSub,
-    pageClass,
-    parent,
-    child,
-}) => {
-    const [height, setHeight] = useState();
+export type Props = {
+    headTitle?: string,
+    childrenPage?: string,
+    pageTitle?: string,
+    pageTitleSub?: string,
+    pageClass?: string,
+    parent?: string,
+    child?: string,
+    children: React.ReactNode | React.ReactNode[];
+}
+
+const LayoutFront = (props: Props) => {
+    const { headTitle, childrenPage, pageTitle, pageTitleSub, pageClass, parent, child, children } = props;
+
+    const [height, setHeight] = useState<number | undefined>();
     useEffect(() => {
         setHeight(window.screen.height);
     }, []);
@@ -33,10 +38,9 @@ const LayoutFront = ({
                         />
                     )}
 
-               
-                    {children}
+                    {childrenPage}
               
-
+                    {children}
                 <Bottom />
                 <Footer />
                 
