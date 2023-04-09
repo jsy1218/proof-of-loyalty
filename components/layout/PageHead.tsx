@@ -1,5 +1,12 @@
 import Head from "next/head";
-function PageHead({ headTitle }) {
+
+type PageHeadProps = {
+    headTitle?: string
+}
+
+function PageHead(props: PageHeadProps) {
+    const { headTitle } = props 
+
     return (
         <>
             <Head>

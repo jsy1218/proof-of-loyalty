@@ -5,7 +5,7 @@ import HeaderLanding from "./HeaderLanding";
 import PageHead from "./PageHead";
 import PageTitleLanding from "./PageTitleLanding";
 
-export type Props = {
+type LayoutFrontProps = {
     headTitle?: string,
     childrenPage?: string,
     pageTitle?: string,
@@ -16,7 +16,7 @@ export type Props = {
     children: React.ReactNode | React.ReactNode[];
 }
 
-const LayoutFront = (props: Props) => {
+const LayoutFront = (props: LayoutFrontProps) => {
     const { headTitle, childrenPage, pageTitle, pageTitleSub, pageClass, parent, child, children } = props;
 
     const [height, setHeight] = useState<number | undefined>();

@@ -1,4 +1,13 @@
-function PageTitle({ pageTitle, pageTitleSub, parent, child }) {
+type PageTileProps = {
+    pageTitle?: string,
+    pageTitleSub?: string,
+    parent?: string,
+    child?: string
+}
+
+function PageTitle(props: PageTileProps) {
+    const { pageTitle, pageTitleSub, parent, child } = props
+
     return (
         <>
             <div className="page-title">
