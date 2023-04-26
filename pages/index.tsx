@@ -57,12 +57,17 @@ const Index = () => {
 				<div className="container">
 					<div className="row">
 						<div className="col-xl-6">
-						<div className="section-title">
-							<h2>Leaderboard</h2>
-						</div>
+							<div className="section-title">
+								<h2>Leaderboard</h2>
+							</div>
 						</div>
 					</div>
 					<div className="row">
+						<div className="col-xl-6">
+							<div className="section-title">
+								<h3>Top creator fees paid Leaderboard</h3>
+							</div>
+						</div>
 						<div className="col-xl-12">
 							<TopCreatorFeesPaid/>
 						</div>
