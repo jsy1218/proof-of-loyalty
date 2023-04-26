@@ -1,38 +1,6 @@
-const Leaderboard = () => {
+import { QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 
-    const data = [
-        {
-            id: 1,
-            title: "Avy"
-        },
-        {
-            id: 2,
-            title: "Mark"
-        },
-        {
-            id: 2,
-            title: "Mark"
-        },
-        {
-            id: 2,
-            title: "Mark"
-        },
-        {
-            id: 2,
-            title: "Mark"
-        },
-        {
-            id: 2,
-            title: "Mark"
-        },
-        {
-            id: 2,
-            title: "Mark"
-        },
-    ];
-
-
-
+const Leaderboard = (data?: QueryResultSet) => {
     return (
         <>
             <div className="leaderboard-table">
@@ -41,18 +9,14 @@ const Leaderboard = () => {
                         <tbody>
                             <tr>
                                 <th># RANK</th>
-                                <th>Name</th>
                                 <th>Public Key</th>
-                                <th>locked</th>
-                                <th>Balance</th>
+                                <th>Creators Fee Contributed (ETH)</th>
                             </tr>
-                            {data.map((item, i) => (
+                            {data?.records?.map((record, i) => (
                                 <tr>
                                     <td>{i}</td>
-                                    <td>John Doe</td>
-                                    <td>0x95e441....ddd97400</td>
-                                    <td>365 Days</td>
-                                    <td>$305,626.99</td>
+                                    <td>{record.wallet}</td>
+                                    <td>{record.creator_fee_eth}</td>
                                 </tr>
                             ))}
 

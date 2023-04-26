@@ -1,6 +1,6 @@
 import Link from "next/link";
 import LayoutFront from "../components/layout/LayoutFront";
-import Leaderboard from "./leaderboard";
+import TopCollectors from "../util/toployaltyquery";
 import IntroSlider from "../components/slider/IntroSlider";
 
 const Index = () => {
@@ -63,8 +63,8 @@ const Index = () => {
 						</div>
 					</div>
 					<div className="row">
-					<div className="col-xl-12">
-						<Leaderboard/>
+						<div className="col-xl-12">
+							<TopCollectors/>
 						</div>
 					</div>
 				</div>

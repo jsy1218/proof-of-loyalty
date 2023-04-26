@@ -9,6 +9,7 @@
         "sass": "node-sass --watch public/scss/style.scss public/css/style.css --source-map public/css/style.css.map"
     },
     "dependencies": {
+        "@flipsidecrypto/sdk": "^1.1.1",
         "@types/node": "18.15.11",
         "@types/react": "18.0.1",
         "bootstrap": "^5.1.3",

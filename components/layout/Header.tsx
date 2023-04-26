@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 import dynamic from 'next/dynamic'
-const ThemeSwitch = dynamic(() => import('../../components/elements/ThemeSwitch'), {
+const ThemeSwitch = dynamic(() => import('../elements/ThemeSwitch'), {
     ssr: false
 })
 function Header() {
