@@ -2,7 +2,7 @@ import { Flipside, Query, QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
 
-const getTopCollectors = async () => {
+const topCreatorFeesPaid = async () => {
     // Initialize `Flipside` with your API key
     const flipside = new Flipside(
       process.env.SHROOMDK_API_KEY ?? "850f9f6e-c08a-48e4-8490-5e1f029c8f5e", // default to a public API KEY. TODO somehow env variable doesn't work yet
@@ -123,24 +123,27 @@ const getTopCollectors = async () => {
     
     // Iterate over the results
     result?.records?.forEach((record) => {
-        const walletAddress = record.wallet
-        const creatorFeeEth = record.creator_fee_eth
-        console.log(`address ${walletAddress} creator fee ${creatorFeeEth}`);
+        const walletAddress = record.wallet;
+        const creatorFeeEth = record.creator_fee_eth;
+        const creatorFeePerc = record.creator_fee_perc;
+        const fullCreatorFeesPaid = record.full_creator_fees_paid;
+        const snapshotTime = record.snapshot_time;
+        console.log(`address ${walletAddress} creator fee ${creatorFeeEth} creator fee percent ${creatorFeePerc} full creator fees paid ${fullCreatorFeesPaid} snapshot time ${snapshotTime}.`);
     });
 
     return result;
 }
 
-const TopCollectors = () => {
-    const [topCollectors, setTopCollectors] = useState<QueryResultSet | undefined>(undefined);
+const TopCreatorFeesPaid = () => {
+    const [topCollectors, setTopCreatorFeesPaid] = useState<QueryResultSet | undefined>(undefined);
     const [isLoading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
       setLoading(true);
 
       async function fetchData() {
-        const data = await getTopCollectors();
-        setTopCollectors(data);
+        const data = await topCreatorFeesPaid();
+        setTopCreatorFeesPaid(data);
         setLoading(false);
       }
 
@@ -152,4 +155,4 @@ const TopCollectors = () => {
     return Leaderboard(topCollectors);
 }
 
-export default TopCollectors;
+export default TopCreatorFeesPaid;

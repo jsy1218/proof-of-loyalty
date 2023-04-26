@@ -10,13 +10,19 @@ const Leaderboard = (data?: QueryResultSet) => {
                             <tr>
                                 <th># RANK</th>
                                 <th>Public Key</th>
-                                <th>Creators Fee Contributed (ETH)</th>
+                                <th>Creator Fees Paid (ETH)</th>
+                                <th>Creator Fees Percent</th>
+                                <th>Full Creator Fees Paid</th>
+                                <th>Snapshot Time</th>
                             </tr>
                             {data?.records?.map((record, i) => (
                                 <tr>
                                     <td>{i}</td>
                                     <td>{record.wallet}</td>
                                     <td>{record.creator_fee_eth}</td>
+                                    <td>{record.creator_fee_perc}</td>
+                                    <td>{record.full_creator_fees_paid}</td>
+                                    <td>{record.snapshot_time}</td>
                                 </tr>
                             ))}
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import LayoutFront from "../components/layout/LayoutFront";
-import TopCollectors from "../util/toployaltyquery";
+import TopCreatorFeesPaid from "../util/toployaltyquery";
 import IntroSlider from "../components/slider/IntroSlider";
 
 const Index = () => {
@@ -64,7 +64,7 @@ const Index = () => {
 					</div>
 					<div className="row">
 						<div className="col-xl-12">
-							<TopCollectors/>
+							<TopCreatorFeesPaid/>
 						</div>
 					</div>
 				</div>
