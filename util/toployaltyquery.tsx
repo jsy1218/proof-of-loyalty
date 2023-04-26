@@ -5,7 +5,7 @@ import Leaderboard from "../pages/leaderboard";
 const getTopCollectors = async () => {
     // Initialize `Flipside` with your API key
     const flipside = new Flipside(
-      "850f9f6e-c08a-48e4-8490-5e1f029c8f5e",
+      process.env.SHROOMDK_API_KEY ?? "850f9f6e-c08a-48e4-8490-5e1f029c8f5e", // default to a public API KEY. TODO somehow env variable doesn't work yet
       "https://node-api.flipsidecrypto.com"
     );
     
