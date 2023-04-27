@@ -1,7 +1,7 @@
 import TableHeaderProps from "./tableheaderprops";
 
 const TableHeader = ({ columns }: TableHeaderProps): JSX.Element => {
-    const headers = columns.map((column, index) => {
+    const headers = columns?.map((column, index) => {
         return (
             <th>{column.header}</th>
         );
