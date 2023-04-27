@@ -1,6 +1,8 @@
 import { Flipside, Query, QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
+import TableHeaderProps from "./tableheaderprops";
+import TableRowsProps from "./tablerowprops";
 
 const topHoldingPeriod = async() => {
     // Initialize `Flipside` with your API key
@@ -329,7 +331,50 @@ const TopHoldingPeriod = () => {
 
     if (isLoading) return <p>Loading...</p>
 
-    return Leaderboard(topCollectors);
+    const tableHeaders: TableHeaderProps = {columns: 
+        [
+          {header: "# RANK"},
+          {header: "Public Key"},
+          {header: "# of collections held"},
+          {header: "# of tokens held"},
+          {header: "# of days held"},
+          {header: "Full Creator Fees Paid"},
+          {header: "Snapshot Time"},
+        ]
+      };
+
+    const dataArrs: Array<Array<string | number | boolean | null>> = []
+      
+    topCollectors?.records?.forEach((record, index) => {
+        const dataArr: Array<string | number | boolean | null> = []
+        dataArr.push(index);
+
+        const walletAddress = record.wallet;
+        dataArr.push(walletAddress);
+
+        const numCollections = record.num_collections;
+        dataArr.push(numCollections);
+
+        const numHeld = record.num_held;
+        dataArr.push(numHeld);
+
+        const daysHeld = record.days_held;
+        dataArr.push(daysHeld);
+
+        const fullCreatorFeesPaid = record.full_creator_fees_paid;
+        dataArr.push(fullCreatorFeesPaid);
+
+        const snapshotTime = record.snapshot_time;
+        dataArr.push(snapshotTime);
+
+        dataArrs.push(dataArr);
+    });
+
+    const tableRows: TableRowsProps<Array<string | number | boolean | null>> = {
+        data: dataArrs
+    };
+
+    return Leaderboard(tableHeaders, tableRows);
 }
 
 export default TopHoldingPeriod;

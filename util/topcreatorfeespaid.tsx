@@ -1,6 +1,8 @@
 import { Flipside, Query, QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
+import TableHeaderProps from "./tableheaderprops";
+import TableRowsProps from "./tablerowprops";
 
 const topCreatorFeesPaid = async () => {
     // Initialize `Flipside` with your API key
@@ -152,7 +154,46 @@ const TopCreatorFeesPaid = () => {
 
     if (isLoading) return <p>Loading...</p>
 
-    return Leaderboard(topCollectors);
+    const tableHeaders: TableHeaderProps = {columns: 
+      [
+        {header: "# RANK"},
+        {header: "Public Key"},
+        {header: "Creator Fees Paid (ETH)"},
+        {header: "Creator Fees Percent"},
+        {header: "Full Creator Fees Paid"},
+        {header: "Snapshot Time"},
+      ]
+    };
+
+    const dataArrs: Array<Array<string | number | boolean | null>> = []
+      
+    topCollectors?.records?.forEach((record, index) => {
+        const dataArr: Array<string | number | boolean | null> = []
+        dataArr.push(index);
+
+        const walletAddress = record.wallet;
+        dataArr.push(walletAddress);
+
+        const creatorFeeEth = record.creator_fee_eth;
+        dataArr.push(creatorFeeEth);
+
+        const creatorFeePerc = record.creator_fee_perc;
+        dataArr.push(creatorFeePerc);
+
+        const fullCreatorFeesPaid = record.full_creator_fees_paid;
+        dataArr.push(fullCreatorFeesPaid);
+
+        const snapshotTime = record.snapshot_time;
+        dataArr.push(snapshotTime);
+
+        dataArrs.push(dataArr);
+    });
+
+    const tableRows: TableRowsProps<Array<string | number | boolean | null>> = {
+        data: dataArrs
+    };
+
+    return Leaderboard(tableHeaders, tableRows);
 }
 
 export default TopCreatorFeesPaid;

@@ -1,31 +1,19 @@
 import { QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
+import TableHeaderProps from "../util/tableheaderprops";
+import TableHeader from "../util/tableheader";
+import TableRowsProps from "../util/tablerowprops";
+import { ReactNode } from "react";
+import TableRows from "../util/tablerows";
 
-const Leaderboard = (data?: QueryResultSet) => {
+const Leaderboard = (tableHeaders: TableHeaderProps, tableRows: TableRowsProps<Array<string | number | boolean | null>>) => {
     return (
         <>
             <div className="leaderboard-table">
                 <div className="table-responsive">
                     <table className="table">
                         <tbody>
-                            <tr>
-                                <th># RANK</th>
-                                <th>Public Key</th>
-                                <th>Creator Fees Paid (ETH)</th>
-                                <th>Creator Fees Percent</th>
-                                <th>Full Creator Fees Paid</th>
-                                <th>Snapshot Time</th>
-                            </tr>
-                            {data?.records?.map((record, i) => (
-                                <tr>
-                                    <td>{i}</td>
-                                    <td>{record.wallet}</td>
-                                    <td>{record.creator_fee_eth}</td>
-                                    <td>{record.creator_fee_perc}</td>
-                                    <td>{record.full_creator_fees_paid}</td>
-                                    <td>{record.snapshot_time}</td>
-                                </tr>
-                            ))}
-
+                            {TableHeader(tableHeaders)}
+                            {TableRows(tableRows)}
                         </tbody>
                     </table>
                 </div>
