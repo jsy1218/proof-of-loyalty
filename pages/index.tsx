@@ -1,7 +1,8 @@
 import Link from "next/link";
 import LayoutFront from "../components/layout/LayoutFront";
-import TopCreatorFeesPaid from "../util/toployaltyquery";
+import TopCreatorFeesPaid from "../util/topcreatorfeespaid";
 import IntroSlider from "../components/slider/IntroSlider";
+import TopHoldingPeriod from "../util/topholdingperiod";
 
 const Index = () => {
 	return (
@@ -70,6 +71,16 @@ const Index = () => {
 						</div>
 						<div className="col-xl-12">
 							<TopCreatorFeesPaid/>
+						</div>
+					</div>
+					<div className="row">
+						<div className="col-xl-6">
+							<div className="section-title">
+								<h3>Top collectors by holding period Leaderboard</h3>
+							</div>
+						</div>
+						<div className="col-xl-12">
+							<TopHoldingPeriod/>
 						</div>
 					</div>
 				</div>
