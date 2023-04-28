@@ -314,8 +314,9 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
     return result;
 }
 
+var currentAddresses = Array<string>();
 const TopHoldingPeriod = (addresses: Array<string>) => {
-    const[topCollectors, setTopHoldingPeriod] = useState<QueryResultSet | undefined>(undefined);
+    const [topCollectors, setTopHoldingPeriod] = useState<QueryResultSet | undefined>(undefined);
     const [isLoading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {  
@@ -326,8 +327,12 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
             setLoading(false);
         }
 
-        fetchData();
-    }, []);
+        if (JSON.stringify(currentAddresses) !== JSON.stringify(addresses)) {
+            console.log("currentAddresses " + currentAddresses + " addresses " + addresses);
+            fetchData();
+            currentAddresses = addresses;
+        }
+    }, [addresses]);
 
     const loadingImage = <RotatingLines
         strokeColor="grey"

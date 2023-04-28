@@ -138,6 +138,8 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
     return result;
 }
 
+// TODO improve ugly way to keep track of the UI state and react to new addresses input
+var currentAddresses = Array<string>();
 const TopCreatorFeesPaid = (addresses: Array<string>) => {
     const [topCollectors, setTopCreatorFeesPaid] = useState<QueryResultSet | undefined>(undefined);
     const [isLoading, setLoading] = useState<boolean>(false)
@@ -150,8 +152,12 @@ const TopCreatorFeesPaid = (addresses: Array<string>) => {
             setLoading(false);
         }
 
-        fetchData();
-    }, []);
+        if (JSON.stringify(currentAddresses) !== JSON.stringify(addresses)) {
+            console.log("currentAddresses " + currentAddresses + " addresses " + addresses);
+            fetchData();
+            currentAddresses = addresses;
+        }
+    }, [addresses]);
 
     const loadingImage = <RotatingLines
         strokeColor="grey"

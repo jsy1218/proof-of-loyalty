@@ -47,9 +47,6 @@ const Index = () => {
 	const change: ChangeEventHandler<HTMLInputElement> = (event) => {
 		console.log("manually typed CA: " + event.target.value);
 	};
-
-	const topCreatorFeesPaid = TopCreatorFeesPaid(collections.map((record) => record.address));
-	const topHoldingPeriod = TopHoldingPeriod(collections.map((record) => record.address));
 	
 	return (
 		<LayoutFront pageClass="front">
@@ -167,7 +164,7 @@ const Index = () => {
 							</div>
 						</div>
 						<div className="col-xl-12">
-							{topCreatorFeesPaid}
+							{TopCreatorFeesPaid(collections.map((record) => record.address))}
 						</div>
 					</div>
 					<div className="row">
@@ -185,7 +182,7 @@ const Index = () => {
 							</div>
 						</div>
 						<div className="col-xl-12">
-							{topHoldingPeriod}
+							{TopHoldingPeriod(collections.map((record) => record.address))}
 						</div>
 					</div>
 				</div>
