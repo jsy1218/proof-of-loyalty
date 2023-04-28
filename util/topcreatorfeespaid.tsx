@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
 import TableHeaderProps from "./tableheaderprops";
 import TableRowsProps from "./tablerowprops";
+import delimiter from "../constants/addressdelimiter";
 
-const topCreatorFeesPaid = async () => {
+const topCreatorFeesPaid = async (addresses: Array<string>) => {
     // Initialize `Flipside` with your API key
     const flipside = new Flipside(
       process.env.SHROOMDK_API_KEY ?? "850f9f6e-c08a-48e4-8490-5e1f029c8f5e", // default to a public API KEY. TODO somehow env variable doesn't work yet
@@ -13,7 +14,7 @@ const topCreatorFeesPaid = async () => {
     );
     
     // Parameters can be passed into SQL statements via simple & native string interpolation
-    const nftContractAddress = "0x6efc003d3f3658383f06185503340c2cf27a57b6;0x769272677fab02575e84945f03eca517acc544cc;0x39ee2c7b3cb80254225884ca001f57118c8f21b6";
+    const nftContractAddress = addresses.join(';');
     const creatorFeePercentage = 0.03;
     const snapshotTime = "2032-01-01 12:00";
     
@@ -123,21 +124,11 @@ const topCreatorFeesPaid = async () => {
     
     // Send the `Query` to Flipside's query engine and await the results
     const result: QueryResultSet = await flipside.query.run(query);
-    
-    // Iterate over the results
-    result?.records?.forEach((record) => {
-        const walletAddress = record.wallet;
-        const creatorFeeEth = record.creator_fee_eth;
-        const creatorFeePerc = record.creator_fee_perc;
-        const fullCreatorFeesPaid = record.full_creator_fees_paid;
-        const snapshotTime = record.snapshot_time;
-        console.log(`address ${walletAddress} creator fee ${creatorFeeEth} creator fee percent ${creatorFeePerc} full creator fees paid ${fullCreatorFeesPaid} snapshot time ${snapshotTime}.`);
-    });
 
     return result;
 }
 
-const TopCreatorFeesPaid = () => {
+const TopCreatorFeesPaid = (addresses: Array<string>) => {
     const [topCollectors, setTopCreatorFeesPaid] = useState<QueryResultSet | undefined>(undefined);
     const [isLoading, setLoading] = useState<boolean>(false)
 
@@ -145,13 +136,13 @@ const TopCreatorFeesPaid = () => {
         setLoading(true);
 
         async function fetchData() {
-            const data = await topCreatorFeesPaid();
-            setTopCreatorFeesPaid(data);
+            const newData = await topCreatorFeesPaid(addresses);
+            setTopCreatorFeesPaid(data => data = newData);
             setLoading(false);
         }
 
         fetchData();
-    }, []);
+    }, [addresses]);
 
     const loadingImage = <RotatingLines
         strokeColor="grey"

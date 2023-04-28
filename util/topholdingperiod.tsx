@@ -5,7 +5,7 @@ import Leaderboard from "../pages/leaderboard";
 import TableHeaderProps from "./tableheaderprops";
 import TableRowsProps from "./tablerowprops";
 
-const topHoldingPeriod = async() => {
+const topHoldingPeriod = async(addresses: Array<string>) => {
     // Initialize `Flipside` with your API key
     const flipside = new Flipside(
         process.env.SHROOMDK_API_KEY ?? "850f9f6e-c08a-48e4-8490-5e1f029c8f5e", // default to a public API KEY. TODO somehow env variable doesn't work yet
@@ -13,7 +13,7 @@ const topHoldingPeriod = async() => {
     );
     
     // Parameters can be passed into SQL statements via simple & native string interpolation
-    const nftContractAddress = "0x6efc003d3f3658383f06185503340c2cf27a57b6;0x769272677fab02575e84945f03eca517acc544cc;0x39ee2c7b3cb80254225884ca001f57118c8f21b6";
+    const nftContractAddress = addresses.join(';');
     const creatorFeePercentage = 0.03;
     const snapshotTime = "2032-01-01 12:00";
 
@@ -298,23 +298,11 @@ const topHoldingPeriod = async() => {
 
     // Send the `Query` to Flipside's query engine and await the results
     const result: QueryResultSet = await flipside.query.run(query);
-    
-    // Iterate over the results
-    result?.records?.forEach((record) => {
-        const walletAddress = record.wallet;
-        const numCollections = record.num_collections;
-        const numHeld = record.num_held;
-        const daysHeld = record.days_held;
-        const fullCreatorFeesPaid = record.full_creator_fees_paid;
-        const snapshotTime = record.snapshot_time;
-
-        console.log(`address ${walletAddress} num collections ${numCollections} num held ${numHeld} days held ${daysHeld} full creator fees paid ${fullCreatorFeesPaid} snapshot time ${snapshotTime}.`);
-    });
 
     return result;
 }
 
-const TopHoldingPeriod = () => {
+const TopHoldingPeriod = (addresses: Array<string>) => {
     const[topCollectors, setTopHoldingPeriod] = useState<QueryResultSet | undefined>(undefined);
     const [isLoading, setLoading] = useState<boolean>(false)
 
@@ -322,13 +310,13 @@ const TopHoldingPeriod = () => {
         setLoading(true);
   
         async function fetchData() {
-            const data = await topHoldingPeriod();
-            setTopHoldingPeriod(data);
+            const newData = await topHoldingPeriod(addresses);
+            setTopHoldingPeriod(data => data = newData);
             setLoading(false);
         }
 
         fetchData();
-    }, []);
+    }, [addresses]);
 
     const loadingImage = <RotatingLines
         strokeColor="grey"

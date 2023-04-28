@@ -12,16 +12,23 @@ import Proof from "../constants/proofcollections";
 import RTFKT from "../constants/rtfktcollections";
 import { useState } from "react";
 import Collection from "../constants/collection";
+import delimiter from "../constants/addressdelimiter";
+import TableHeaderProps from "../util/tableheaderprops";
+import TableHeader from "../util/tableheader";
+import ColumnDefinitionType from "../util/columndefinitiontype";
 
 const Index = () => {
-	const [collections, setCollections] = useState<Array<Collection>>(Yugalabs);
+	const defaultCollection = Memeland;
+
+	const [collections, setCollections] = useState<Array<Collection>>(defaultCollection);
+	const collectionNames: Array<ColumnDefinitionType> = collections.map((record) => ({header: record.collection}) as ColumnDefinitionType );
 
 	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
 		// Preventing the page from reloading
 		event.preventDefault();
 	
 		// Do something 
-		alert("all collections:  " + collections.map((record) => record.address));
+		console.log("all collections:  " + collectionNames.map(value => value.header));
 	}
 
 	const select = (selectedList: Array<Collection>, selectedItem: Collection) => {
@@ -31,6 +38,11 @@ const Index = () => {
 	const remove = (selectedList: Array<Collection>, selectedItem: Collection) => {
 		setCollections(selectedList);
 	}
+
+	const topCreatorFeesPaid = TopCreatorFeesPaid(collections.map((record) => record.address));
+	const topHoldingPeriod = TopHoldingPeriod(collections.map((record) => record.address));
+	
+	const tableHeaders: TableHeaderProps = {columns: collectionNames};
 
 	return (
 		<LayoutFront pageClass="front">
@@ -56,7 +68,7 @@ const Index = () => {
 												onSearch={function noRefCheck(){}}
 												onSelect={select}
 												options={Azuki.concat(Doodles).concat(Memeland).concat(Proof).concat(RTFKT).concat(Yugalabs)}
-												selectedValues={Yugalabs}
+												selectedValues={defaultCollection}
 												showCheckbox
 											/>
 											<span>
@@ -135,21 +147,41 @@ const Index = () => {
 					<div className="row">
 						<div className="col-xl-6">
 							<div className="section-title">
-								<h3>Top creator fees paid Leaderboard</h3>
+								<h3>Top creator fees paid Leaderboard for collections</h3>
+															
+								<div className="leaderboard-table">
+									<div className="table-responsive">
+										<table className="table">
+											<tbody>
+												{TableHeader(tableHeaders)}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="col-xl-12">
-							<TopCreatorFeesPaid/>
+							{topCreatorFeesPaid}
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-xl-6">
 							<div className="section-title">
-								<h3>Top collectors by holding period Leaderboard</h3>
+								<h3>Top collectors by holding period Leaderboard for collections</h3>
+
+								<div className="leaderboard-table">
+									<div className="table-responsive">
+										<table className="table">
+											<tbody>
+												{TableHeader(tableHeaders)}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="col-xl-12">
-							<TopHoldingPeriod/>
+							{topHoldingPeriod}
 						</div>
 					</div>
 				</div>
