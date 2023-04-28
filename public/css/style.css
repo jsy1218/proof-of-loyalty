@@ -9370,7 +9370,7 @@ button,
   .intro1 .intro-content .intro-search input {
     border: 0px;
     width: 90%;
-    background: transparent; }
+    background: #444; }
   .intro1 .intro-content .intro-search form {
     display: flex;
     align-items: center; }
