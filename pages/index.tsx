@@ -40,7 +40,7 @@ const Index = () => {
 												showCheckbox
 											/>
 											<span>
-												<i className="ri-search-line"></i>
+												<button className="ri-search-line"></button>
 											</span>
 										</form>
 									</div>
@@ -58,7 +58,7 @@ const Index = () => {
 												placeholder="contract address(es) separated by ;"
 											/>
 											<span>
-												<i className="ri-search-line"></i>
+												<button className="ri-search-line"></button>
 											</span>
 										</form>
 									</div>
