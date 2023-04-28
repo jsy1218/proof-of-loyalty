@@ -299,6 +299,18 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
     // Send the `Query` to Flipside's query engine and await the results
     const result: QueryResultSet = await flipside.query.run(query);
 
+    // Iterate over the results
+    result?.records?.forEach((record) => {
+        const walletAddress = record.wallet;
+        const numCollections = record.num_collections;
+        const numHeld = record.num_held;
+        const daysHeld = record.days_held;
+        const fullCreatorFeesPaid = record.full_creator_fees_paid;
+        const snapshotTime = record.snapshot_time;
+
+        console.log(`address ${walletAddress} num collections ${numCollections} num held ${numHeld} days held ${daysHeld} full creator fees paid ${fullCreatorFeesPaid} snapshot time ${snapshotTime}.`);
+    });
+
     return result;
 }
 
@@ -306,17 +318,16 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
     const[topCollectors, setTopHoldingPeriod] = useState<QueryResultSet | undefined>(undefined);
     const [isLoading, setLoading] = useState<boolean>(false)
 
-    useEffect(() => {
-        setLoading(true);
-  
+    useEffect(() => {  
         async function fetchData() {
+            setLoading(true);
             const newData = await topHoldingPeriod(addresses);
-            setTopHoldingPeriod(data => data = newData);
+            setTopHoldingPeriod(value => value = newData);
             setLoading(false);
         }
 
         fetchData();
-    }, [addresses]);
+    }, []);
 
     const loadingImage = <RotatingLines
         strokeColor="grey"

@@ -125,6 +125,16 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
     // Send the `Query` to Flipside's query engine and await the results
     const result: QueryResultSet = await flipside.query.run(query);
 
+    // Iterate over the results
+    result?.records?.forEach((record) => {
+        const walletAddress = record.wallet;
+        const creatorFeeEth = record.creator_fee_eth;
+        const creatorFeePerc = record.creator_fee_perc;
+        const fullCreatorFeesPaid = record.full_creator_fees_paid;
+        const snapshotTime = record.snapshot_time;
+        console.log(`address ${walletAddress} creator fee ${creatorFeeEth} creator fee percent ${creatorFeePerc} full creator fees paid ${fullCreatorFeesPaid} snapshot time ${snapshotTime}.`);
+    });
+
     return result;
 }
 
@@ -133,16 +143,15 @@ const TopCreatorFeesPaid = (addresses: Array<string>) => {
     const [isLoading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
-        setLoading(true);
-
         async function fetchData() {
+            setLoading(true);
             const newData = await topCreatorFeesPaid(addresses);
-            setTopCreatorFeesPaid(data => data = newData);
+            setTopCreatorFeesPaid(value => value = newData);
             setLoading(false);
         }
 
         fetchData();
-    }, [addresses]);
+    }, []);
 
     const loadingImage = <RotatingLines
         strokeColor="grey"

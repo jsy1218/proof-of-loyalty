@@ -12,37 +12,45 @@ import Proof from "../constants/proofcollections";
 import RTFKT from "../constants/rtfktcollections";
 import { useState } from "react";
 import Collection from "../constants/collection";
-import delimiter from "../constants/addressdelimiter";
 import TableHeaderProps from "../util/tableheaderprops";
 import TableHeader from "../util/tableheader";
 import ColumnDefinitionType from "../util/columndefinitiontype";
+import { ChangeEventHandler } from "react";
 
 const Index = () => {
 	const defaultCollection = Memeland;
 
 	const [collections, setCollections] = useState<Array<Collection>>(defaultCollection);
-	const collectionNames: Array<ColumnDefinitionType> = collections.map((record) => ({header: record.collection}) as ColumnDefinitionType );
+	const collectionNames = (collections: Array<Collection>) => 
+		collections.map((record) => ({header: record.collection}) as ColumnDefinitionType );
 
 	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
 		// Preventing the page from reloading
 		event.preventDefault();
 	
 		// Do something 
-		console.log("all collections:  " + collectionNames.map(value => value.header));
+		console.log("all collections:  " + collectionNames(collections).map((record) => record.header));
 	}
 
 	const select = (selectedList: Array<Collection>, selectedItem: Collection) => {
+		console.log("select " + selectedList.map((record) => record.collection) + " item " + selectedItem.collection);
 		setCollections(selectedList);
+		console.log();
 	}
 
 	const remove = (selectedList: Array<Collection>, selectedItem: Collection) => {
+		console.log("select " + selectedList.map((record) => record.collection) + " item " + selectedItem.collection);
 		setCollections(selectedList);
 	}
+
+	const change: ChangeEventHandler<HTMLInputElement> = (event) => {
+		console.log("manually typed CA: " + event.target.value);
+	};
 
 	const topCreatorFeesPaid = TopCreatorFeesPaid(collections.map((record) => record.address));
 	const topHoldingPeriod = TopHoldingPeriod(collections.map((record) => record.address));
 	
-	const tableHeaders: TableHeaderProps = {columns: collectionNames};
+	const tableHeaders: TableHeaderProps = {columns: collectionNames(collections)};
 
 	return (
 		<LayoutFront pageClass="front">
@@ -84,13 +92,14 @@ const Index = () => {
 										0x769272677fab02575e84945f03eca517acc544cc;
 										0x39ee2c7b3cb80254225884ca001f57118c8f21b6</p>
 									<div className="intro-search">
-										<form action="#">
+										<form onSubmit={submitForm}>
 											<input
 												type="text"
 												placeholder="contract address(es) separated by ;"
+												onChange={change}
 											/>
 											<span>
-												<button className="ri-search-line"></button>
+												<button type="submit" className="ri-search-line"></button>
 											</span>
 										</form>
 									</div>
