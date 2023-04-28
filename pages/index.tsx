@@ -21,21 +21,22 @@ const Index = () => {
 	const defaultCollection = Memeland;
 
 	const [collections, setCollections] = useState<Array<Collection>>(defaultCollection);
-	const collectionNames = (collections: Array<Collection>) => 
-		collections.map((record) => ({header: record.collection}) as ColumnDefinitionType );
+	const collectionNames = (collections: Array<Collection>) => collections.map((record) => ({header: record.collection}) as ColumnDefinitionType );
+
+	const [tableHeaders, setTableHeaders] = useState<TableHeaderProps>({columns: collectionNames(collections)});
 
 	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
 		// Preventing the page from reloading
 		event.preventDefault();
 	
 		// Do something 
-		console.log("all collections:  " + collectionNames(collections).map((record) => record.header));
+		console.log("all collections:  " + collectionNames(collections).map(value => value.header));
+		setTableHeaders({columns: collectionNames(collections)});
 	}
 
 	const select = (selectedList: Array<Collection>, selectedItem: Collection) => {
 		console.log("select " + selectedList.map((record) => record.collection) + " item " + selectedItem.collection);
 		setCollections(selectedList);
-		console.log();
 	}
 
 	const remove = (selectedList: Array<Collection>, selectedItem: Collection) => {
@@ -50,8 +51,6 @@ const Index = () => {
 	const topCreatorFeesPaid = TopCreatorFeesPaid(collections.map((record) => record.address));
 	const topHoldingPeriod = TopHoldingPeriod(collections.map((record) => record.address));
 	
-	const tableHeaders: TableHeaderProps = {columns: collectionNames(collections)};
-
 	return (
 		<LayoutFront pageClass="front">
 			<div className="intro1 section-padding">
