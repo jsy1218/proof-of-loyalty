@@ -10,8 +10,28 @@ import Doodles from "../constants/doodlescollections";
 import Memeland from "../constants/memelandcollections";
 import Proof from "../constants/proofcollections";
 import RTFKT from "../constants/rtfktcollections";
+import { useState } from "react";
+import Collection from "../constants/collection";
 
 const Index = () => {
+	const [collections, setCollections] = useState<Array<Collection>>(Yugalabs);
+
+	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
+		// Preventing the page from reloading
+		event.preventDefault();
+	
+		// Do something 
+		alert("all collections:  " + collections.map((record) => record.address));
+	}
+
+	const select = (selectedList: Array<Collection>, selectedItem: Collection) => {
+		setCollections(selectedList);
+	}
+
+	const remove = (selectedList: Array<Collection>, selectedItem: Collection) => {
+		setCollections(selectedList);
+	}
+
 	return (
 		<LayoutFront pageClass="front">
 			<div className="intro1 section-padding">
@@ -26,21 +46,21 @@ const Index = () => {
 									<h4>Pre-selected collections</h4>
 									<p>Loads faster if all collections of the same brand (e.g. Azuki) are chosen together</p>
 									<div className="intro-search">
-										<form action="#">
+										<form onSubmit={submitForm}>
 											<Multiselect
 												displayValue="collection"
 												groupBy="brand"
 												placeholder="Click on any collections"
-												onKeyPressFn={function noRefCheck(){}}
-												onRemove={function noRefCheck(){}}
+												onKeyPressFn={submitForm}
+												onRemove={remove}
 												onSearch={function noRefCheck(){}}
-												onSelect={function noRefCheck(){}}
+												onSelect={select}
 												options={Azuki.concat(Doodles).concat(Memeland).concat(Proof).concat(RTFKT).concat(Yugalabs)}
 												selectedValues={Yugalabs}
 												showCheckbox
 											/>
 											<span>
-												<button className="ri-search-line"></button>
+												<button type="submit" className="ri-search-line"></button>
 											</span>
 										</form>
 									</div>

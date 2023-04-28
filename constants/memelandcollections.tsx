@@ -1,4 +1,6 @@
-const Memeland = [{
+import Collection from "./collection";
+
+const Memeland: Collection[] = [{
     brand: 'Memeland',
     collection: 'YOU THE REAL MVP',
     address: '0x6efc003d3f3658383f06185503340c2cf27a57b6'

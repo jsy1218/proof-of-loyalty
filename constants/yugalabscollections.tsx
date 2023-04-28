@@ -1,4 +1,6 @@
-const Yugalabs = [{
+import Collection from "./collection";
+
+const Yugalabs: Collection[] = [{
     brand: 'Yugalabs',
     collection: 'Bored Ape Yacht Club',
     address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
