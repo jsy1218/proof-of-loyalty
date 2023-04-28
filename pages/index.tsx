@@ -16,6 +16,7 @@ import TableHeaderProps from "../util/tableheaderprops";
 import TableHeader from "../util/tableheader";
 import ColumnDefinitionType from "../util/columndefinitiontype";
 import { ChangeEventHandler } from "react";
+import delimiter from "../constants/addressdelimiter";
 
 const Index = () => {
 	const defaultCollection = Memeland;
@@ -46,6 +47,9 @@ const Index = () => {
 
 	const change: ChangeEventHandler<HTMLInputElement> = (event) => {
 		console.log("manually typed CA: " + event.target.value);
+		const addresses = event.target.value.split(delimiter);
+		const collections: Array<Collection> = addresses.map((address) => ({brand: address, collection: address, address: address }) as Collection);
+		setCollections(collections);
 	};
 	
 	return (
