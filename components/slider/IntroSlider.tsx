@@ -9,26 +9,116 @@ const IntroSlider = () => {
         {
             img: "1.jpg",
             avatar: "1.png",
-            title: "The Sandbox",
-            author: "Sound Box"
+            title: "PFP",
+            author: "Azuki"
         },
         {
             img: "2.jpg",
             avatar: "2.png",
-            title: "The Sandbox",
-            author: "Sound Box"
+            title: "BEANZ",
+            author: "AzukiBox"
         },
         {
             img: "3.jpg",
             avatar: "3.png",
-            title: "The Sandbox",
-            author: "Sound Box"
+            title: "Doodles",
+            author: "Doodles LLC"
         },
         {
             img: "4.jpg",
             avatar: "4.png",
-            title: "The Sandbox",
-            author: "Sound Box"
+            title: "Space Doodles",
+            author: "Doodles LLC"
+        },
+        {
+            img: "5.jpg",
+            avatar: "5.png",
+            title: "Dooplicators",
+            author: "Doodles LLC"
+        },
+        {
+            img: "6.jpg",
+            avatar: "6.png",
+            title: "Genesis box",
+            author: "Doodles LLC"
+        },
+        {
+            img: "7.jpg",
+            avatar: "7.png",
+            title: "YOU THE REAL MVP",
+            author: "9GAG"
+        },
+        {
+            img: "8.jpg",
+            avatar: "8.png",
+            title: "CAPTAINZ",
+            author: "9GAG"
+        },
+        {
+            img: "9.jpg",
+            avatar: "9.png",
+            title: "POTATOZ",
+            author: "9GAG"
+        },
+        {
+            img: "10.jpg",
+            avatar: "10.png",
+            title: "Proof Collective",
+            author: "Proof"
+        },
+        {
+            img: "11.jpg",
+            avatar: "11.png",
+            title: "Moonbirds",
+            author: "Proof"
+        },
+        {
+            img: "12.jpg",
+            avatar: "12.png",
+            title: "Oddities",
+            author: "Proof"
+        },
+        {
+            img: "13.jpg",
+            avatar: "13.png",
+            title: "Clone X",
+            author: "RTFKT"
+        },
+        {
+            img: "14.jpg",
+            avatar: "14.png",
+            title: "Bored Ape Yacht Club",
+            author: "Yugalabs"
+        },
+        {
+            img: "15.jpg",
+            avatar: "15.png",
+            title: "Mutant Ape Yacht Club",
+            author: "Yugalabs"
+        },
+        {
+            img: "16.jpg",
+            avatar: "16.png",
+            title: "Bored Ape Kennel Club",
+            author: "Yugalabs"
+        },
+        {
+            img: "17.jpg",
+            avatar: "17.png",
+            title: "Bored Ape Kennel Club",
+            author: "Yugalabs"
+        },
+        {
+            img: "18.jpg",
+            avatar: "18.png",
+            title: "Meebits",
+            author: "Yugalabs"
+        },
+        {
+            img: "19.jpg",
+            avatar: "19.png",
+            title: "Otherdeed for Otherside",
+            author: "Yugalabs"
         },
     ];
 
