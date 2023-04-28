@@ -146,17 +146,15 @@ const Index = () => {
 					</div>
 					<div className="row">
 						<div className="col-xl-6">
-							<div className="section-title">
-								<h3>Top creator fees paid Leaderboard for collections</h3>
-															
-								<div className="leaderboard-table">
-									<div className="table-responsive">
-										<table className="table">
-											<tbody>
-												{TableHeader(tableHeaders)}
-											</tbody>
-										</table>
-									</div>
+							<h3>Top creator fees paid Leaderboard for collections</h3>
+														
+							<div className="leaderboard-table">
+								<div className="table-responsive">
+									<table className="table">
+										<tbody>
+											{TableHeader(tableHeaders)}
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -166,17 +164,15 @@ const Index = () => {
 					</div>
 					<div className="row">
 						<div className="col-xl-6">
-							<div className="section-title">
-								<h3>Top collectors by holding period Leaderboard for collections</h3>
+							<h3>Top collectors by holding period Leaderboard for collections</h3>
 
-								<div className="leaderboard-table">
-									<div className="table-responsive">
-										<table className="table">
-											<tbody>
-												{TableHeader(tableHeaders)}
-											</tbody>
-										</table>
-									</div>
+							<div className="leaderboard-table">
+								<div className="table-responsive">
+									<table className="table">
+										<tbody>
+											{TableHeader(tableHeaders)}
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
