@@ -360,7 +360,7 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
       
     topCollectors?.records?.forEach((record, index) => {
         const dataArr: Array<string | number | boolean | null> = []
-        dataArr.push(index);
+        dataArr.push(index + 1);
 
         const walletAddress = record.wallet;
         dataArr.push(walletAddress);
