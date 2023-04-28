@@ -9367,7 +9367,7 @@ button,
       margin-right: 15px; } }
   .intro1 .intro-content .intro-search span {
     font-size: 24px;
-    margin-left: 10px; }
+    margin-left: auto; }
   .intro1 .intro-content .intro-search input {
     border: 0px;
     width: 90%;

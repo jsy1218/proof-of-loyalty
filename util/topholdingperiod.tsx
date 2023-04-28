@@ -334,7 +334,7 @@ const TopHoldingPeriod = () => {
     const tableHeaders: TableHeaderProps = {columns: 
         [
           {header: "# RANK"},
-          {header: "Public Key"},
+          {header: "Wallet"},
           {header: "# of collections held"},
           {header: "# of tokens held"},
           {header: "# of days held"},

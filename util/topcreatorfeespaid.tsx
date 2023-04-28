@@ -157,7 +157,7 @@ const TopCreatorFeesPaid = () => {
     const tableHeaders: TableHeaderProps = {columns: 
       [
         {header: "# RANK"},
-        {header: "Public Key"},
+        {header: "Wallet"},
         {header: "Creator Fees Paid (ETH)"},
         {header: "Creator Fees Percent"},
         {header: "Full Creator Fees Paid"},
