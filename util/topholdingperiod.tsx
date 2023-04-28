@@ -1,3 +1,4 @@
+import { RotatingLines } from 'react-loader-spinner';
 import { Flipside, Query, QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
@@ -329,7 +330,14 @@ const TopHoldingPeriod = () => {
         fetchData();
     }, []);
 
-    if (isLoading) return <p>Loading...</p>
+    const loadingImage = <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
+        visible={true}
+    />
+    if (isLoading) return loadingImage;
 
     const tableHeaders: TableHeaderProps = {columns: 
         [

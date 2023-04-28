@@ -1,3 +1,4 @@
+import { RotatingLines } from 'react-loader-spinner';
 import { Flipside, Query, QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
@@ -141,28 +142,35 @@ const TopCreatorFeesPaid = () => {
     const [isLoading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
-      setLoading(true);
+        setLoading(true);
 
-      async function fetchData() {
-        const data = await topCreatorFeesPaid();
-        setTopCreatorFeesPaid(data);
-        setLoading(false);
-      }
+        async function fetchData() {
+            const data = await topCreatorFeesPaid();
+            setTopCreatorFeesPaid(data);
+            setLoading(false);
+        }
 
-      fetchData();
+        fetchData();
     }, []);
 
-    if (isLoading) return <p>Loading...</p>
+    const loadingImage = <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
+        visible={true}
+    />
+    if (isLoading) return loadingImage;
 
     const tableHeaders: TableHeaderProps = {columns: 
-      [
-        {header: "# RANK"},
-        {header: "Wallet"},
-        {header: "Creator Fees Paid (ETH)"},
-        {header: "Creator Fees Percent"},
-        {header: "Full Creator Fees Paid"},
-        {header: "Snapshot Time"},
-      ]
+        [
+            {header: "# RANK"},
+            {header: "Wallet"},
+            {header: "Creator Fees Paid (ETH)"},
+            {header: "Creator Fees Percent"},
+            {header: "Full Creator Fees Paid"},
+            {header: "Snapshot Time"},
+        ]
     };
 
     const dataArrs: Array<Array<string | number | boolean | null>> = []
