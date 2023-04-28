@@ -115,7 +115,7 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
             END AS full_creator_fees_paid
             , (SELECT actual_snapshot_time FROM snapshot_time_check) AS snapshot_time
           FROM sales s
-          ORDER BY creator_fee_usd DESC
+          ORDER BY creator_fee_eth DESC
         )
     
       select TOP 10 * from output`,

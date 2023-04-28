@@ -289,7 +289,7 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
               FROM current_holders ch
               LEFT JOIN sales s USING (wallet)
               LEFT JOIN days_held dh USING (wallet)
-              ORDER BY num_held DESC, num_collections DESC, creator_fee_usd DESC
+              ORDER BY num_held DESC, num_collections DESC, creator_fee_eth DESC
             )
         
           select TOP 10 * from output`,
@@ -305,15 +305,16 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
         const numCollections = record.num_collections;
         const numHeld = record.num_held;
         const daysHeld = record.days_held;
-        const fullCreatorFeesPaid = record.full_creator_fees_paid;
+        const creatorFeeEth = record.creator_fee_eth;
         const snapshotTime = record.snapshot_time;
 
-        console.log(`address ${walletAddress} num collections ${numCollections} num held ${numHeld} days held ${daysHeld} full creator fees paid ${fullCreatorFeesPaid} snapshot time ${snapshotTime}.`);
+        console.log(`address ${walletAddress} num collections ${numCollections} num held ${numHeld} days held ${daysHeld} creator fee eth ${creatorFeeEth} snapshot time ${snapshotTime}.`);
     });
 
     return result;
 }
 
+// TODO improve ugly way to keep track of the UI state and react to new addresses input
 var currentAddresses = Array<string>();
 const TopHoldingPeriod = (addresses: Array<string>) => {
     const [topCollectors, setTopHoldingPeriod] = useState<QueryResultSet | undefined>(undefined);
@@ -347,10 +348,10 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
         [
           {header: "# RANK"},
           {header: "Wallet"},
-          {header: "# of collections held"},
           {header: "# of tokens held"},
+          {header: "# of collections held"},
           {header: "# of days held"},
-          {header: "Full Creator Fees Paid"},
+          {header: "Creator Fee ETH"},
           {header: "Snapshot Time"},
         ]
       };
@@ -364,17 +365,17 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
         const walletAddress = record.wallet;
         dataArr.push(walletAddress);
 
-        const numCollections = record.num_collections;
-        dataArr.push(numCollections);
-
         const numHeld = record.num_held;
         dataArr.push(numHeld);
+
+        const numCollections = record.num_collections;
+        dataArr.push(numCollections);
 
         const daysHeld = record.days_held;
         dataArr.push(daysHeld);
 
-        const fullCreatorFeesPaid = record.full_creator_fees_paid;
-        dataArr.push(fullCreatorFeesPaid);
+        const creatorFeeEth = record.creator_fee_eth;
+        dataArr.push(creatorFeeEth);
 
         const snapshotTime = record.snapshot_time;
         dataArr.push(snapshotTime);
