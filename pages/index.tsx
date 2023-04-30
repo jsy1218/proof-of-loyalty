@@ -17,6 +17,7 @@ import TableHeader from "../util/tableheader";
 import ColumnDefinitionType from "../util/columndefinitiontype";
 import { ChangeEventHandler } from "react";
 import delimiter from "../constants/addressdelimiter";
+import TeamMember from "../components/elements/TeamMeber";
 
 const Index = () => {
 	const defaultCollection = Memeland;
@@ -191,6 +192,21 @@ const Index = () => {
 					</div>
 				</div>
 			</div>
+
+			<div className="team section-padding">
+					<div className="container">
+						<div className="row">
+							<div className="col-xl-6">
+								<div className="section-title">
+									<h2>Meet Our Team</h2>
+								</div>
+							</div>
+						</div>
+						<div className="row">
+							<TeamMember/>
+						</div>
+					</div>
+				</div>
 		</LayoutFront>
 	);
 };
