@@ -7,30 +7,26 @@ const TeamMember = () => {
         {
             id: 1,
             title: "Data",
-            name: "Denze",
+            name: "0xD",
             img: "denze pfp.png",
-            twitter: "https://twitter.com/_denze",
         },
         {
             id: 2,
-            title: "Artist and Graphic Designer",
-            name: "Joey",
+            title: "Advisor",
+            name: "0xJ",
             img: "joey pfp.png",
-            twitter: "https://twitter.com/joey_lu",
         },
         {
             id: 3,
-            title: "Data",
-            name: "Karina",
+            title: "Advisor",
+            name: "0xK",
             img: "karina pfp.png",
-            twitter: "https://twitter.com/karinadoteth",
         },
         {
             id: 4,
             title: "Engineering",
-            name: "Siyu",
+            name: "0xS",
             img: "siyu pfp.png",
-            twitter: "https://twitter.com/JohnJsy0216",
         },
     ];
 
@@ -43,11 +39,6 @@ const TeamMember = () => {
                         <img src={`/images/avatar/${item.img}`} alt="" width={100} />
                         <h3>{item.name}</h3>
                         <p>{item.title}</p>
-                        <div className="team-social">
-                            <Link href={item.twitter}>
-                                <a><i className="bi bi-twitter"></i></a>
-                            </Link>
-                        </div>
                     </div>
                 </div>
 
