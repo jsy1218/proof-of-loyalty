@@ -42,7 +42,7 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
                     ELSE date_trunc('day', to_timestamp_ntz(data.snapshot_time))
                 END AS snapshot_time -- use the end of the previous day / start of specified day as the snapshot time
             FROM VALUES
-                ('${snapshotTime}}')
+                ('${snapshotTime}')
             AS data(snapshot_time)
         )
     
@@ -50,8 +50,177 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
             SELECT
                 *
             FROM VALUES
-                (${creatorFeePercentage}})
+                (${creatorFeePercentage})
             AS data(creator_fee_perc)
+        )
+    
+        -- get all nft transfers
+        , nft_transfers AS (
+          SELECT
+            t.nft_address AS nft_contract_address
+            , t.tokenid AS token_id
+            , t.block_timestamp AS block_time
+            , date_trunc('day', t.block_timestamp) AS day
+            , t.nft_from_address AS from_address
+            , t.nft_to_address AS to_address
+            , COALESCE(erc1155_value, 1) AS amount
+            , CASE WHEN erc1155_value is not null THEN 'true' ELSE 'false' END AS is_erc1155
+            -- , ROW_NUMBER() OVER (PARTITION BY t.nft_address, t.tokenid ORDER BY block_number ASC, event_index ASC) AS rank_asc
+            , ROW_NUMBER() OVER (PARTITION BY t.nft_address, t.tokenid ORDER BY block_number DESC, event_index DESC) AS rank_desc
+          FROM ethereum.core.ez_nft_transfers t
+          INNER JOIN input_contracts c ON t.nft_address = c.nft_contract_address
+          WHERE true
+            AND block_timestamp <= (SELECT snapshot_time FROM input_time)
+            AND erc1155_value is null -- exclude ERC-1155
+        )
+    
+        -- wallet holdings of each token_id
+        -- , erc1155_holdings AS (
+        --     SELECT
+        --         wallet
+        --         , nft_contract_address
+        --         , token_id
+        --         , SUM(num_transfers) AS num_held
+        --     FROM (
+        --         SELECT
+        --             to_address AS wallet -- all wallets that have ever received the NFT
+        --             , nft_contract_address
+        --             , token_id
+        --             , SUM(amount) AS num_transfers -- transfers IN
+        --         FROM nft_transfers tr
+        --         WHERE true
+        --             AND is_erc1155 = 'true'
+        --         GROUP BY 1,2,3
+                
+        --         UNION all
+                
+        --         SELECT
+        --             from_address AS wallet -- all wallets that have ever sent the NFT
+        --             , nft_contract_address
+        --             , token_id
+        --             , -1 * SUM(amount) AS num_transfers -- transfers OUT
+        --         FROM nft_transfers tr
+        --         WHERE true
+        --             AND is_erc1155 = 'true'
+        --         GROUP BY 1,2,3
+        --     )
+        --     GROUP BY 1,2,3
+        --     HAVING SUM(num_transfers) > 0
+        -- )
+    
+      --   , erc721_holdings AS (
+      --     SELECT
+      --         to_address AS wallet
+      --         , nft_contract_address
+      --         , token_id
+      --         , '1' AS num_held
+      --     FROM nft_transfers tr
+      --     WHERE true
+      --         AND is_erc1155 = 'false'
+      --         AND rank_desc = 1
+      -- )
+    
+      --   , all_holdings AS (
+      --       SELECT wallet, nft_contract_address, token_id, num_held FROM erc1155_holdings
+      --       UNION ALL
+      --       SELECT wallet, nft_contract_address, token_id, num_held FROM erc721_holdings
+      --   )
+    
+            /* only include ERC-721 */
+            , all_holdings AS (
+                SELECT
+                    to_address AS wallet
+                    , nft_contract_address
+                    , token_id
+                    , '1' AS num_held
+                FROM nft_transfers tr
+                WHERE true
+                    AND is_erc1155 = 'false'
+                    AND rank_desc = 1
+            )
+    
+    /*************************************************************/
+    
+        , all_wallets AS (
+            SELECT
+                to_address AS wallet
+                , MIN(block_time) AS time_first_acquisition
+            FROM nft_transfers
+            GROUP BY 1
+        )
+        
+        , all_times AS (
+          select
+            time
+          from (
+            select 
+              row_number() over(order by 0) i
+              , start_date
+              , dateadd(day, (i-1), start_date) AS time
+              , end_date
+            from table(generator(rowcount => 10000 )) x
+            left join (
+              select
+                date_trunc('day', min(block_time)) AS start_date 
+                , date_trunc('day', (SELECT snapshot_time FROM input_time)) AS end_date
+              from nft_transfers
+            ) a ON true
+          )
+          where time <= end_date
+          order by time ASC
+      )
+    
+        , base AS (
+            SELECT
+                at.time
+                , aw.wallet
+                , aw.time_first_acquisition
+            FROM all_times at
+            FULL JOIN all_wallets aw ON true
+        )
+    
+        , holdings_over_time AS (
+            SELECT
+                day AS time
+                , wallet
+                , SUM(change) AS daily_change
+            FROM (
+                SELECT
+                    day
+                    , to_address AS wallet
+                    , SUM(amount) AS change
+                FROM nft_transfers
+                GROUP BY 1,2
+                
+                UNION ALL
+                
+                SELECT
+                    day
+                    , from_address AS wallet
+                    , -1 * SUM(amount) AS change
+                FROM nft_transfers
+                GROUP BY 1,2
+            )
+            GROUP BY 1,2
+        )
+    
+        , days_held AS (
+            SELECT
+                wallet
+                , COUNT(*) AS days_held
+                , MIN(time_first_acquisition) AS time_first_acquisition
+            FROM (
+                SELECT
+                    b.time
+                    , b.wallet
+                    , SUM(COALESCE(daily_change,0)) OVER (PARTITION BY b.wallet ORDER BY b.time ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS num_held
+                    , b.time_first_acquisition
+                FROM base b
+                LEFT JOIN holdings_over_time h USING (time, wallet)
+            )
+            WHERE (num_held) > 0
+            GROUP BY 1
+            ORDER BY days_held DESC
         )
     
         , snapshot_time_check AS (
@@ -65,6 +234,21 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
             FROM (
                 SELECT MAX(block_timestamp) AS block_time FROM ethereum.core.ez_nft_transfers WHERE block_timestamp > current_timestamp - interval '24 hour'
             )
+        )
+    
+        , current_holders AS (
+          SELECT
+            wallet
+            , COUNT(distinct nft_contract_address) AS num_collections
+            , SUM(num_held) AS num_held
+          FROM all_holdings
+          WHERE true
+            AND wallet NOT IN (
+                lower('0x000000000000000000000000000000000000dead')
+                , lower('0x0000000000000000000000000000000000000000')
+                , lower('0x0000000000000000000000000000000000000001')
+            )
+          GROUP BY 1
         )
     
         , sales AS (
@@ -84,7 +268,7 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
             ) AS creator_fee_eth
             , SUM(s.price_usd) AS vol_usd
             , SUM(s.creator_fee_usd) AS creator_fee_usd
-            , APPROX_COUNT_DISTINCT(tx_hash) AS num_txns
+            , COUNT(distinct tx_hash) AS num_txns
           FROM ethereum.core.ez_nft_sales s
           LEFT JOIN ethereum.core.fact_hourly_token_prices p ON date_trunc('hour', s.block_timestamp) = p.hour
             AND s.currency_address = p.token_address
@@ -100,21 +284,27 @@ const topHoldingPeriod = async(addresses: Array<string>) => {
     
         , output AS (
           SELECT
-            s.wallet
+            ch.wallet
+            , ch.num_collections
+            , ch.num_held
+            , dh.days_held
+            , dh.time_first_acquisition
             , COALESCE(s.num_txns,0) AS num_sales
             , s.vol_eth
             , s.vol_usd
             , s.creator_fee_eth
-            , COALESCE(s.creator_fee_usd,0) AS creator_fee_usd
-            , COALESCE(DIV0NULL(s.creator_fee_usd, s.vol_usd),0) AS creator_fee_perc
+            , s.creator_fee_usd
+            , s.creator_fee_usd / s.vol_usd AS creator_fee_perc
             , CASE
               WHEN s.vol_usd is null THEN ''
-              WHEN s.vol_usd is not null AND DIV0NULL(s.creator_fee_usd, s.vol_usd) >= (SELECT creator_fee_perc FROM input_creator_fee_perc) THEN TRUE
+              WHEN s.vol_usd is not null AND s.creator_fee_usd / s.vol_usd >= (SELECT creator_fee_perc FROM input_creator_fee_perc) THEN TRUE
               ELSE FALSE
             END AS full_creator_fees_paid
             , (SELECT actual_snapshot_time FROM snapshot_time_check) AS snapshot_time
-          FROM sales s
-          ORDER BY creator_fee_usd DESC
+          FROM current_holders ch
+          LEFT JOIN sales s USING (wallet)
+          LEFT JOIN days_held dh USING (wallet)
+          ORDER BY num_held DESC, num_collections DESC, creator_fee_usd DESC
         )
     
       select TOP 10 * from output`,
