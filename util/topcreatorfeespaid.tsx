@@ -26,7 +26,7 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
               trim(F.value) AS nft_contract_address
             FROM (
               SELECT
-                  SPLIT(data.nft_contract_address, ';') AS input
+                  SPLIT(data.nft_contract_address, ';') AS input -- input can be separated by semi-colons
               FROM VALUES
                   (lower('${nftContractAddress}'))
               AS data(nft_contract_address)
@@ -35,12 +35,12 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
             WHERE trim(F.value) regexp '^0x[0-9a-fA-F]{40}$' -- check address is a valid format, i.e. starts with 0x and has 42 characters total
         )
     
-        , input_time AS (
+         , input_time AS (
             SELECT
                 CASE
-                    WHEN to_timestamp_ntz(data.snapshot_time) > date_trunc('minute', current_timestamp) THEN date_trunc('minute', current_timestamp)
-                    ELSE date_trunc('minute', to_timestamp_ntz(data.snapshot_time))
-                END AS snapshot_time
+                    WHEN to_timestamp_ntz(data.snapshot_time) > date_trunc('minute', current_timestamp) THEN date_trunc('day', current_timestamp) -- adjust the time if input is a future time
+                    ELSE date_trunc('day', to_timestamp_ntz(data.snapshot_time))
+                END AS snapshot_time -- use the end of the previous day / start of specified day as the snapshot time
             FROM VALUES
                 ('${snapshotTime}')
             AS data(snapshot_time)
@@ -50,20 +50,20 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
             SELECT
                 *
             FROM VALUES
-                ('${creatorFeePercentage}')
+                (${creatorFeePercentage})
             AS data(creator_fee_perc)
         )
     
-        -- get the time of the latest data for reference in the output
-        -- to ensure that the actual snapshot time is the expected snapshot time
         , snapshot_time_check AS (
             SELECT
                 CASE
-                    WHEN MIN(block_time) >= (SELECT snapshot_time FROM input_time) THEN (SELECT snapshot_time FROM input_time)
-                    ELSE MIN(block_time)
+                    /* if the required day of data is incomplete, set time to the previous day */
+                    WHEN block_time < (SELECT snapshot_time FROM input_time) THEN (SELECT snapshot_time FROM input_time) - interval '1 day'
+                    /* otherewise, use the originally calculated time */
+                    ELSE (SELECT snapshot_time FROM input_time)
                 END AS actual_snapshot_time
             FROM (
-                SELECT MAX(block_timestamp) AS block_time FROM ethereum.core.ez_nft_transfers
+                SELECT MAX(block_timestamp) AS block_time FROM ethereum.core.ez_nft_transfers WHERE block_timestamp > current_timestamp - interval '24 hour'
             )
         )
     
@@ -84,7 +84,7 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
             ) AS creator_fee_eth
             , SUM(s.price_usd) AS vol_usd
             , SUM(s.creator_fee_usd) AS creator_fee_usd
-            , COUNT(distinct tx_hash) AS num_txns
+            , APPROX_COUNT_DISTINCT(tx_hash) AS num_txns
           FROM ethereum.core.ez_nft_sales s
           LEFT JOIN ethereum.core.fact_hourly_token_prices p ON date_trunc('hour', s.block_timestamp) = p.hour
             AND s.currency_address = p.token_address
@@ -94,8 +94,7 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
             AND block_timestamp <= (SELECT snapshot_time FROM input_time)
             AND s.price_usd > 0
             AND COALESCE(s.creator_fee_usd,0) >= 0
-            -- AND s.block_timestamp <= (SELECT max(hour) FROM ethereum.core.fact_hourly_token_prices)
-            AND EXISTS(SELECT 1 FROM input_contracts c WHERE s.nft_address = c.nft_contract_address)
+            AND s.nft_address IN (SELECT nft_contract_address FROM input_contracts)
           GROUP BY 1
         )
     
@@ -115,7 +114,7 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
             END AS full_creator_fees_paid
             , (SELECT actual_snapshot_time FROM snapshot_time_check) AS snapshot_time
           FROM sales s
-          ORDER BY creator_fee_eth DESC
+          ORDER BY creator_fee_usd DESC
         )
     
       select TOP 10 * from output`,
