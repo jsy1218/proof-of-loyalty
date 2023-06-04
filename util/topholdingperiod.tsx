@@ -8,8 +8,8 @@ import TableRowsProps from "./tablerowprops";
 const topHoldingPeriod = async(addresses: Array<string>) => {
     // Initialize `Flipside` with your API key
     const flipside = new Flipside(
-        process.env.SHROOMDK_API_KEY ?? "850f9f6e-c08a-48e4-8490-5e1f029c8f5e", // default to a public API KEY. TODO somehow env variable doesn't work yet
-        "https://node-api.flipsidecrypto.com"
+        process.env.SHROOMDK_API_KEY ?? "11e049d7-99aa-4559-91bb-4c715c9f86ba", // default to a public API KEY. TODO somehow env variable doesn't work yet
+        "https://api-v2.flipsidecrypto.xyz"
     );
     
     // Parameters can be passed into SQL statements via simple & native string interpolation
@@ -367,7 +367,6 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
           {header: "# of collections held"},
           {header: "# of days held"},
           {header: "Creator Fee ETH"},
-          {header: "Snapshot Time"},
         ]
       };
 
@@ -391,9 +390,6 @@ const TopHoldingPeriod = (addresses: Array<string>) => {
 
         const creatorFeeEth = record.creator_fee_eth;
         dataArr.push(creatorFeeEth);
-
-        const snapshotTime = record.snapshot_time;
-        dataArr.push(snapshotTime);
 
         dataArrs.push(dataArr);
     });
