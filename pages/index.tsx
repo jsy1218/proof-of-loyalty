@@ -18,6 +18,7 @@ import ColumnDefinitionType from "../util/columndefinitiontype";
 import { ChangeEventHandler } from "react";
 import delimiter from "../constants/addressdelimiter";
 import TeamMember from "../components/elements/TeamMeber";
+import { HeartSwitch } from '@anatoliygatt/heart-switch';
 
 const Index = () => {
 	const defaultCollection = Memeland;
@@ -26,6 +27,8 @@ const Index = () => {
 	const collectionNames = (collections: Array<Collection>) => collections.map((record) => ({header: record.collection}) as ColumnDefinitionType );
 
 	const [tableHeaders, setTableHeaders] = useState<TableHeaderProps>({columns: collectionNames(collections)});
+
+	const [checked, setChecked] = useState(false);
 
 	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
 		// Preventing the page from reloading
@@ -52,6 +55,43 @@ const Index = () => {
 		const collections: Array<Collection> = addresses.map((address) => ({brand: address, collection: address, address: address }) as Collection);
 		setCollections(collections);
 	};
+
+	const leaderBoardTitle = (checked: boolean) => {
+		if (!checked) {
+			return <h3>Top creator fees paid Leaderboard for collections</h3>
+		} else {
+			return <h3>Top collectors by holding period Leaderboard for collections</h3>
+		}
+	}
+
+	const leaderBoardRanking = (checked: boolean) => {
+		if (!checked) {
+			return TopCreatorFeesPaid(collections.map((record) => record.address))
+		} else {
+			return TopHoldingPeriod(collections.map((record) => record.address))
+		}
+	}
+
+	const leaderBoard = (checked: boolean) => {
+		return <div className="row">
+			<div className="col-xl-6">
+				{leaderBoardTitle(checked)}
+											
+				<div className="leaderboard-table">
+					<div className="table-responsive">
+						<table className="table">
+							<tbody>
+								{TableHeader(tableHeaders)}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div className="col-xl-12">
+				{leaderBoardRanking(checked)}
+			</div>
+		</div>
+	}
 	
 	return (
 		<LayoutFront pageClass="front">
@@ -151,45 +191,17 @@ const Index = () => {
 						<div className="col-xl-6">
 							<div className="section-title">
 								<h2>Leaderboard</h2>
+									<HeartSwitch
+										size="lg"
+										checked={checked}
+										onChange={(event) => {
+											setChecked(event.target.checked);
+										}}
+									/>
 							</div>
 						</div>
 					</div>
-					<div className="row">
-						<div className="col-xl-6">
-							<h3>Top creator fees paid Leaderboard for collections</h3>
-														
-							<div className="leaderboard-table">
-								<div className="table-responsive">
-									<table className="table">
-										<tbody>
-											{TableHeader(tableHeaders)}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div className="col-xl-12">
-							{TopCreatorFeesPaid(collections.map((record) => record.address))}
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-xl-6">
-							<h3>Top collectors by holding period Leaderboard for collections</h3>
-
-							<div className="leaderboard-table">
-								<div className="table-responsive">
-									<table className="table">
-										<tbody>
-											{TableHeader(tableHeaders)}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div className="col-xl-12">
-							{TopHoldingPeriod(collections.map((record) => record.address))}
-						</div>
-					</div>
+					{leaderBoard(checked)}
 				</div>
 			</div>
 
