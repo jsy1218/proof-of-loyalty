@@ -216,7 +216,7 @@ const Index = () => {
 							<div className="section-title">
 								<h2>Leaderboard</h2>
 									<HeartSwitch
-										size="lg"
+										size="md"
 										checked={leaderboardChecked}
 										onChange={(event) => {
 											setLeaderboardChecked(event.target.checked);
