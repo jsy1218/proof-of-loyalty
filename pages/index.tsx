@@ -28,7 +28,8 @@ const Index = () => {
 
 	const [tableHeaders, setTableHeaders] = useState<TableHeaderProps>({columns: collectionNames(collections)});
 
-	const [checked, setChecked] = useState(false);
+	const [useCAChecked, setUseCAChecked] = useState(false);
+	const [leaderboardChecked, setLeaderboardChecked] = useState(false);
 
 	const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
 		// Preventing the page from reloading
@@ -55,6 +56,62 @@ const Index = () => {
 		const collections: Array<Collection> = addresses.map((address) => ({brand: address, collection: address, address: address }) as Collection);
 		setCollections(collections);
 	};
+
+	const chooseByCollection = () => {
+		return <div className="col-xl-12">
+			<h4>Pre-selected collections</h4>
+			<p>Loads faster if all collections of the same brand (e.g. Azuki) are chosen together</p>
+			<div className="intro-search">
+				<form onSubmit={submitForm}>
+					<Multiselect
+						displayValue="collection"
+						groupBy="brand"
+						placeholder="Click on any collections"
+						onKeyPressFn={submitForm}
+						onRemove={remove}
+						onSearch={function noRefCheck(){}}
+						onSelect={select}
+						options={Azuki.concat(Doodles).concat(Memeland).concat(Proof).concat(RTFKT).concat(Yugalabs)}
+						selectedValues={defaultCollection}
+						showCheckbox
+					/>
+					<span>
+						<button type="submit" className="ri-search-line"></button>
+					</span>
+				</form>
+			</div>
+		</div>
+	}
+
+	const chooseByCA = () => {
+		return <div className="col-xl-12">
+			<br></br> 
+			<h4>Manually type in any contract address(es) (slower)</h4>
+			<p>e.g. 0x6efc003d3f3658383f06185503340c2cf27a57b6;
+				0x769272677fab02575e84945f03eca517acc544cc;
+				0x39ee2c7b3cb80254225884ca001f57118c8f21b6</p>
+			<div className="intro-search">
+				<form onSubmit={submitForm}>
+					<input
+						type="text"
+						placeholder="contract address(es) separated by ;"
+						onChange={change}
+					/>
+					<span>
+						<button type="submit" className="ri-search-line"></button>
+					</span>
+				</form>
+			</div>
+		</div>
+	}
+
+	const chooseInput = (checked: boolean) => {
+		if (!checked) {
+			return chooseByCollection()
+		} else {
+			return chooseByCA()
+		}
+	}
 
 	const leaderBoardTitle = (checked: boolean) => {
 		if (!checked) {
@@ -101,50 +158,17 @@ const Index = () => {
 						<div className="col-xl-5">
 							<div className="intro-content">
 								<p>Proof of loyalty FOR</p>
-								<h1>NFT Creators</h1>
-
-								<div className="col-xl-12">
-									<h4>Pre-selected collections</h4>
-									<p>Loads faster if all collections of the same brand (e.g. Azuki) are chosen together</p>
-									<div className="intro-search">
-										<form onSubmit={submitForm}>
-											<Multiselect
-												displayValue="collection"
-												groupBy="brand"
-												placeholder="Click on any collections"
-												onKeyPressFn={submitForm}
-												onRemove={remove}
-												onSearch={function noRefCheck(){}}
-												onSelect={select}
-												options={Azuki.concat(Doodles).concat(Memeland).concat(Proof).concat(RTFKT).concat(Yugalabs)}
-												selectedValues={defaultCollection}
-												showCheckbox
-											/>
-											<span>
-												<button type="submit" className="ri-search-line"></button>
-											</span>
-										</form>
-									</div>
-								</div>
-								<div className="col-xl-12">
-									<br></br> 
-									<h4>Manually type in any contract address(es) (slower)</h4>
-									<p>e.g. 0x6efc003d3f3658383f06185503340c2cf27a57b6;
-										0x769272677fab02575e84945f03eca517acc544cc;
-										0x39ee2c7b3cb80254225884ca001f57118c8f21b6</p>
-									<div className="intro-search">
-										<form onSubmit={submitForm}>
-											<input
-												type="text"
-												placeholder="contract address(es) separated by ;"
-												onChange={change}
-											/>
-											<span>
-												<button type="submit" className="ri-search-line"></button>
-											</span>
-										</form>
-									</div>
-								</div>
+								<h1>NFT Creators
+									<HeartSwitch
+										size="lg"
+										checked={useCAChecked}
+										onChange={(event) => {
+											setUseCAChecked(event.target.checked);
+										}}
+									/>
+								</h1>
+									
+								{chooseInput(useCAChecked)}
 
 								<div className="intro-social">
 									<Link href="#">
@@ -193,15 +217,15 @@ const Index = () => {
 								<h2>Leaderboard</h2>
 									<HeartSwitch
 										size="lg"
-										checked={checked}
+										checked={leaderboardChecked}
 										onChange={(event) => {
-											setChecked(event.target.checked);
+											setLeaderboardChecked(event.target.checked);
 										}}
 									/>
 							</div>
 						</div>
 					</div>
-					{leaderBoard(checked)}
+					{leaderBoard(leaderboardChecked)}
 				</div>
 			</div>
 
