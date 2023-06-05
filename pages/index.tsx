@@ -158,7 +158,8 @@ const Index = () => {
 						<div className="col-xl-5">
 							<div className="intro-content">
 								<p>Proof of loyalty FOR</p>
-								<h1>NFT Creators
+								<div className="section-title">
+									<h1>NFT Creators</h1>
 									<HeartSwitch
 										size="lg"
 										checked={useCAChecked}
@@ -166,7 +167,8 @@ const Index = () => {
 											setUseCAChecked(event.target.checked);
 										}}
 									/>
-								</h1>
+								</div>
+								
 									
 								{chooseInput(useCAChecked)}
 
