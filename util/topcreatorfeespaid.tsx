@@ -147,8 +147,7 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
 
     const response = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
       .then(response => { 
-        response.headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-        return response.text() 
+        return response.text();
       } 
     );
     const queryRunId = JSON.parse(response).result.queryRun.id
@@ -172,18 +171,16 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
     };
     
     var queryRun = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
-      .then(response => { 
-        response.headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-        return response.text() 
+      .then(response => {
+        return response.text();
       } 
     );
     var queryState = JSON.parse(queryRun).result.queryRun.state
     
     while (queryState !== "QUERY_STATE_SUCCESS") {
       queryRun = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
-        .then(response => { 
-          response.headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-          return response.text() 
+        .then(response => {
+          return response.text();
         } 
       );
       queryState = JSON.parse(queryRun).result.queryRun.state
@@ -213,9 +210,8 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
     };
     
     const queryResult = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
-      .then(response => { 
-        response.headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-        return response.text() 
+      .then(response => {
+        return response.text(); 
       } 
     );
     const resultJson = JSON.parse(queryResult)
