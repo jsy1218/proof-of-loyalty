@@ -1,5 +1,5 @@
 import { RotatingLines } from 'react-loader-spinner';
-import { Row, QueryResultSet, QueryResultRecord } from "@flipsidecrypto/sdk/dist/src";
+import { QueryResultSet } from "@flipsidecrypto/sdk/dist/src";
 import { useEffect, useState } from 'react';
 import Leaderboard from "../pages/leaderboard";
 import TableHeaderProps from "./tableheaderprops";
