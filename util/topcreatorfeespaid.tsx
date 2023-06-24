@@ -7,10 +7,6 @@ import TableRowsProps from "./tablerowprops";
 import { flipsideQueryResult } from "./singleflipsidequery";
 
 const topCreatorFeesPaid = async (addresses: Array<string>) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("x-api-key", process.env.SHROOMDK_API_KEY ?? "11e049d7-99aa-4559-91bb-4c715c9f86ba"); // default to a public API KEY. TODO somehow env variable doesn't work yet);
-
     // Parameters can be passed into SQL statements via simple & native string interpolation
     const nftContractAddress = addresses.join(';');
     const creatorFeePercentage = 0.03;

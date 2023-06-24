@@ -4,7 +4,6 @@ export const flipsideQueryResult: (sql: string, pageSize: number) => Promise<Que
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("x-api-key", process.env.SHROOMDK_API_KEY ?? "11e049d7-99aa-4559-91bb-4c715c9f86ba"); // default to a public API KEY. TODO somehow env variable doesn't work yet);
-    
 
     var raw = JSON.stringify({
       "jsonrpc": "2.0",
