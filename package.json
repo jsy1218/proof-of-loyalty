@@ -12,7 +12,7 @@
         "@anatoliygatt/heart-switch": "^1.0.13",
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",
-        "@flipsidecrypto/sdk": "^1.1.1",
+        "@flipsidecrypto/sdk": "^2.0.0",
         "@types/node": "18.15.11",
         "@types/react": "18.0.1",
         "bootstrap": "^5.1.3",
