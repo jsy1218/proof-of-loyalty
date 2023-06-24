@@ -97,21 +97,10 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
 
       , output AS (
         SELECT
-          s.wallet
-          , e.ens_name || '.eth' AS ens
-          , COALESCE(e.ens_name || '.eth', s.wallet) AS ens_or_wallet
-          , COALESCE(s.num_txns,0) AS num_sales
-          , s.vol_eth
-          , s.vol_usd
-          , s.creator_fee_eth
+          COALESCE(e.ens_name || '.eth', s.wallet) AS ens_or_wallet
           , COALESCE(s.creator_fee_usd,0) AS creator_fee_usd
+          , s.creator_fee_eth
           , COALESCE(DIV0NULL(s.creator_fee_usd, s.vol_usd),0) AS creator_fee_perc
-          , CASE
-            WHEN s.vol_usd is null THEN ''
-            WHEN s.vol_usd is not null AND DIV0NULL(s.creator_fee_usd, s.vol_usd) >= (SELECT creator_fee_perc FROM input_creator_fee_perc) THEN TRUE
-            ELSE FALSE
-          END AS full_creator_fees_paid
-          , (SELECT actual_snapshot_time FROM snapshot_time_check) AS snapshot_time
         FROM sales s
         LEFT JOIN crosschain.core.ez_ens e ON e.ens_set = 'Y' AND e.owner = s.wallet
         ORDER BY creator_fee_usd DESC
@@ -170,21 +159,19 @@ const topCreatorFeesPaid = async (addresses: Array<string>) => {
       redirect: 'follow'
     };
     
-    var queryRun = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
-      .then(response => {
-        return response.text();
-      } 
-    );
-    var queryState = JSON.parse(queryRun).result.queryRun.state
-    
-    while (queryState !== "QUERY_STATE_SUCCESS") {
-      queryRun = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
-        .then(response => {
-          return response.text();
-        } 
-      );
-      queryState = JSON.parse(queryRun).result.queryRun.state
-    }
+    var queryState = 'UNDEFINED'
+    do {
+      try {
+        const queryRun = await fetch("https://api-v2.flipsidecrypto.xyz/json-rpc", requestOptions)
+          .then(response => {
+            return response.text();
+          } 
+        );
+        queryState = JSON.parse(queryRun).result.queryRun.state
+      } catch (error) {
+        console.log(error)
+      }
+    } while (queryState !== "QUERY_STATE_SUCCESS")
           
     var raw = JSON.stringify({
       "jsonrpc": "2.0",
@@ -273,9 +260,9 @@ const TopCreatorFeesPaid = (addresses: Array<string>) => {
         [
             {header: "# RANK"},
             {header: "Wallet"},
+            {header: "Creator Fees Paid (USD)"},
             {header: "Creator Fees Paid (ETH)"},
             {header: "Creator Fees Percent"},
-            {header: "Full Creator Fees Paid"},
         ]
     };
 
@@ -285,17 +272,17 @@ const TopCreatorFeesPaid = (addresses: Array<string>) => {
         const dataArr: Array<string | number | boolean | null> = []
         dataArr.push(index + 1);
 
-        const walletAddress = record.wallet;
+        const walletAddress = record.ens_or_wallet;
         dataArr.push(walletAddress);
+
+        const creatorFeeUsd = record.creator_fee_usd;
+        dataArr.push(creatorFeeUsd);
 
         const creatorFeeEth = record.creator_fee_eth;
         dataArr.push(creatorFeeEth);
 
         const creatorFeePerc = record.creator_fee_perc;
         dataArr.push(creatorFeePerc);
-
-        const fullCreatorFeesPaid = record.full_creator_fees_paid;
-        dataArr.push(fullCreatorFeesPaid);
 
         dataArrs.push(dataArr);
     });
