@@ -135,7 +135,7 @@ function HeaderLanding() {
                                     </div>
 
                                     <div className="signin-btn d-flex align-items-center">
-                                        {/* <Link href="/signin"><a className="btn btn-primary">Sign In</a></Link> */}
+                                        <Link href="/signin"><a className="btn btn-primary">Connect Wallet</a></Link>
                                     </div>
                                 </nav>
                             </div>
