@@ -6,6 +6,7 @@ import { BlockieAvatar } from "../scaffold-eth/BlockieAvatar";
 import { useAutoConnect } from "../../hooks/eth-scaffolding/useAutoConnect";
 import { useNetworkColor } from "../../hooks/eth-scaffolding/useNetworkColor";
 import { getTargetNetwork } from "../../util/scaffold-eth/networks";
+import {  useState } from "react";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
@@ -22,13 +23,19 @@ export const RainbowKitCustomConnectButton = () => {
     <ConnectButton.Custom>
       {({ account, chain, openAccountModal, openConnectModal, mounted }) => {
         const connected = mounted && account && chain;
+        const [isInitial, setInitial] = useState(true);
+
+        const init: () => void = () => {
+          openAccountModal()
+          setInitial(false)
+        }
 
         return (
           <>
             {(() => {
-              if (!connected) {
+              if (!connected || isInitial) {                
                 return (
-                  <button className="btn btn-primary btn-sm" onClick={openConnectModal} type="button">
+                  <button className="btn btn-primary btn-sm" onClick={init} type="button">
                     Connect Wallet
                   </button>
                 );
