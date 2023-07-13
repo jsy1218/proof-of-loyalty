@@ -1,6 +1,9 @@
 import dynamic from 'next/dynamic';
 import Link from "next/link";
 import React, { useState } from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButtonProps } from '@rainbow-me/rainbowkit/dist/components/ConnectButton/ConnectButton';
+
 const ThemeSwitch = dynamic(() => import('../elements/ThemeSwitch'), {
     ssr: false
 })
@@ -135,7 +138,7 @@ function HeaderLanding() {
                                     </div>
 
                                     <div className="signin-btn d-flex align-items-center">
-                                        <Link href="/signin"><a className="btn btn-primary">Connect Wallet</a></Link>
+                                        <ConnectButton/>
                                     </div>
                                 </nav>
                             </div>
